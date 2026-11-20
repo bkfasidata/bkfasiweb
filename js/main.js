@@ -1,15 +1,10 @@
 /**
- * BKFASI Corporate Website - Main JavaScript
+ * BKFASI - Factory Automation Systems Intergrator
+ * Main JavaScript Interactions
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Dynamic Year in Footer
-    const yearSpan = document.getElementById('currentYear');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
-
-    // 2. Sticky Navbar Shadow on Scroll
+    // 1. Sticky Navigation Bar & Shadow
     const header = document.getElementById('navbar');
     const backToTopBtn = document.getElementById('backToTop');
 
@@ -20,15 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.remove('scrolled');
         }
 
-        // Back to top button visibility
-        if (window.scrollY > 400) {
+        // Show/hide Back to Top button
+        if (window.scrollY > 350) {
             backToTopBtn.classList.add('active');
         } else {
             backToTopBtn.classList.remove('active');
         }
     });
 
-    // 3. Smooth Back to Top
+    // 2. Smooth Scroll to Top
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
@@ -38,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Mobile Menu Hamburger Toggle
+    // 3. Mobile Menu Toggle
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -49,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle('active');
         });
 
-        // Close menu when clicking any nav link
+        // Close menu on nav link click
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -57,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Close menu when clicking outside
+        // Close menu on click outside
         document.addEventListener('click', (e) => {
             if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
                 hamburger.classList.remove('active');
@@ -66,48 +61,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Active Link Highlighting on Scroll
+    // 4. ScrollSpy for Active Nav Link
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
         const scrollY = window.pageYOffset;
 
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 120;
-            const sectionId = current.getAttribute('id');
-            const targetLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
+        sections.forEach(sec => {
+            const secHeight = sec.offsetHeight;
+            const secTop = sec.offsetTop - 120;
+            const secId = sec.getAttribute('id');
+            const navLink = document.querySelector(`.nav-link[href*="${secId}"]`);
 
-            if (targetLink) {
-                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                    targetLink.classList.add('active');
+            if (navLink) {
+                if (scrollY > secTop && scrollY <= secTop + secHeight) {
+                    navLink.classList.add('active');
                 } else {
-                    targetLink.classList.remove('active');
+                    navLink.classList.remove('active');
                 }
             }
         });
     });
 
-    // 6. Project Filter Tabs
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active class on buttons
-            tabButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filterValue = btn.getAttribute('data-filter');
-
-            projectCards.forEach(card => {
-                const category = card.getAttribute('data-category');
-                if (filterValue === 'all' || category === filterValue) {
-                    card.style.display = 'block';
-                    card.style.animation = 'fadeIn 0.4s ease forwards';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+    // 5. Language selector toggle alert simulation
+    const langLinks = document.querySelectorAll('.lang-switch a');
+    langLinks.forEach(lang => {
+        lang.addEventListener('click', (e) => {
+            e.preventDefault();
+            langLinks.forEach(l => l.classList.remove('active'));
+            lang.classList.add('active');
         });
     });
 });
@@ -115,31 +96,27 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Handle Contact Form Submission
  */
-function handleFormSubmit(event) {
+function handleContactSubmit(event) {
     event.preventDefault();
     const form = document.getElementById('contactForm');
-    const successMsg = document.getElementById('formSuccessMessage');
-
+    const alertBox = document.getElementById('contactSuccessAlert');
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
 
-    // Show loading indicator
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+    // Show loading state
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi yêu cầu...';
     submitBtn.disabled = true;
 
-    // Simulate sending delay (e.g. API call)
     setTimeout(() => {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
         
         // Show success notification
-        successMsg.classList.remove('d-none');
+        alertBox.classList.remove('d-none');
         form.reset();
 
-        // Auto hide notification after 6 seconds
         setTimeout(() => {
-            successMsg.classList.add('d-none');
-        }, 6000);
-    }, 1000);
+            alertBox.classList.add('d-none');
+        }, 7000);
+    }, 900);
 }
-

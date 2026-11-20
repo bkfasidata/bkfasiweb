@@ -85,7 +85,7 @@ Nếu bạn có tài khoản GitHub:
 3. Vào mục **Settings** của repository -> Chọn thẻ **Pages** ở menu bên trái.
 4. Ở mục **Build and deployment** > **Source**, chọn nhánh `main` và thư mục `/ (root)`, sau đó bấm **Save**.
 5. Sau 1-2 phút, website của bạn sẽ hoạt động tại địa chỉ:
-   `https://<tên-tài-khoản-github>.github.io/bkfasi-web/`
+   `https://bkfasidata.github.io/bkfasiweb/`
 
 ---
 
