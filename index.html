@@ -24,15 +24,21 @@
     <div class="topbar">
         <div class="container topbar-content">
             <div class="topbar-left">
-                <span><i class="fa-solid fa-phone"></i> Hotline: <a href="tel:0915841887"><strong>091 584 1887</strong></a></span>
+                <span data-i18n="hotline"><i class="fa-solid fa-phone"></i> Hotline: <a href="tel:0915841887"><strong>091 584 1887</strong></a></span>
                 <span><i class="fa-solid fa-envelope"></i> <a href="mailto:sale@bkfasi.com">sale@bkfasi.com</a></span>
-                <span class="d-none-sm"><i class="fa-solid fa-location-dot"></i> 65/11/1295 Đường Giải Phóng, P. Hoàng Mai, Hà Nội</span>
+                <span class="d-none-sm" data-i18n="address_top"><i class="fa-solid fa-location-dot"></i> 65/11/1295 Đường Giải Phóng, P. Hoàng Mai, Hà Nội</span>
             </div>
             <div class="topbar-right">
-                <div class="lang-switch">
-                    <a href="#" class="active" title="Tiếng Việt"><img src="images/flag_vn.png" alt="VN"> VI</a>
-                    <a href="#" title="English"><img src="images/flag_en.png" alt="EN"> EN</a>
-                    <a href="#" title="한국어"><img src="images/flag_kr.png" alt="KR"> KR</a>
+                <!-- 5 Language Dropdown Selector -->
+                <div class="lang-selector-box">
+                    <i class="fa-solid fa-globe lang-globe-icon"></i>
+                    <select id="langSelect" class="lang-select" aria-label="Chọn ngôn ngữ / Select Language">
+                        <option value="vi" selected>🇻🇳 Tiếng Việt</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="ko">🇰🇷 한국어</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -47,20 +53,33 @@
 
             <nav class="nav-menu" id="nav-menu">
                 <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link active">Trang Chủ</a></li>
-                    <li><a href="#about" class="nav-link">Về Chúng Tôi</a></li>
-                    <li><a href="#solutions" class="nav-link">Giải Pháp</a></li>
-                    <li><a href="#industries" class="nav-link">Ngành Công Nghiệp</a></li>
-                    <li><a href="#testimonials" class="nav-link">Cảm Nhận</a></li>
-                    <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
+                    <li><a href="#hero" class="nav-link active" data-i18n="nav_home">Trang Chủ</a></li>
+                    <li><a href="#about" class="nav-link" data-i18n="nav_about">Về Chúng Tôi</a></li>
+                    <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">Giải Pháp</a></li>
+                    <li><a href="#industries" class="nav-link" data-i18n="nav_industries">Ngành Công Nghiệp</a></li>
+                    <li><a href="#testimonials" class="nav-link" data-i18n="nav_testimonials">Cảm Nhận</a></li>
+                    <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Liên Hệ</a></li>
                 </ul>
+
+                <!-- Mobile Language Selector inside drawer -->
+                <div class="mobile-lang-wrap">
+                    <span class="mobile-lang-label"><i class="fa-solid fa-language"></i> Language:</span>
+                    <select id="mobileLangSelect" class="lang-select mobile-select">
+                        <option value="vi" selected>🇻🇳 Tiếng Việt</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="ko">🇰🇷 한국어</option>
+                    </select>
+                </div>
+
                 <div class="mobile-cta">
                     <a href="#contact" class="btn btn-primary btn-sm"><i class="fa-solid fa-phone"></i> 091 584 1887</a>
                 </div>
             </nav>
 
             <div class="header-action">
-                <a href="#contact" class="btn btn-primary">
+                <a href="#contact" class="btn btn-primary" data-i18n="btn_consult">
                     <i class="fa-solid fa-headset"></i> Tư Vấn Kỹ Thuật
                 </a>
                 <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -79,25 +98,25 @@
             <div class="container hero-container">
                 <div class="hero-content">
                     <div class="hero-subtitle-badge">
-                        <i class="fa-solid fa-gears"></i> FACTORY AUTOMATION SYSTEMS INTEGRATOR
+                        <i class="fa-solid fa-gears"></i> <span data-i18n="hero_badge">FACTORY AUTOMATION SYSTEMS INTEGRATOR</span>
                     </div>
-                    <h1 class="hero-title">
+                    <h1 class="hero-title" data-i18n="hero_title">
                         BKFASI – CÔNG TY CỔ PHẦN TÍCH HỢP TỰ ĐỘNG HÓA BÁCH KHOA
                     </h1>
-                    <p class="hero-desc">
+                    <p class="hero-desc" data-i18n="hero_desc">
                         Đơn vị tích hợp hệ thống tự động hóa công nghiệp toàn diện, cung cấp các giải pháp trọn gói cho các nhà máy sản xuất trên toàn quốc. Chúng tôi chuyên thiết kế và triển khai các hệ thống dựa trên bộ điều khiển lập trình (PLC), hệ thống thông tin sản xuất (MES), điều khiển chuyển động (motion control) và robot công nghiệp.
                     </p>
                     <div class="hero-badges">
-                        <span class="hero-tag"><i class="fa-solid fa-robot"></i> Robot Công Nghiệp & Dịch Vụ</span>
-                        <span class="hero-tag"><i class="fa-solid fa-microchip"></i> Hệ Thống PLC / SCADA</span>
-                        <span class="hero-tag"><i class="fa-solid fa-gauge-high"></i> Motion Control</span>
-                        <span class="hero-tag"><i class="fa-solid fa-chart-line"></i> Phần Mềm MES</span>
+                        <span class="hero-tag"><i class="fa-solid fa-robot"></i> <span data-i18n="tag_robot">Robot Công Nghiệp & Dịch Vụ</span></span>
+                        <span class="hero-tag"><i class="fa-solid fa-microchip"></i> <span data-i18n="tag_plc">Hệ Thống PLC / SCADA</span></span>
+                        <span class="hero-tag"><i class="fa-solid fa-gauge-high"></i> <span data-i18n="tag_motion">Motion Control</span></span>
+                        <span class="hero-tag"><i class="fa-solid fa-chart-line"></i> <span data-i18n="tag_mes">Phần Mềm MES</span></span>
                     </div>
                     <div class="hero-actions">
-                        <a href="#solutions" class="btn btn-primary btn-lg">
+                        <a href="#solutions" class="btn btn-primary btn-lg" data-i18n="btn_explore">
                             Khám Phá Giải Pháp <i class="fa-solid fa-arrow-right"></i>
                         </a>
-                        <a href="#contact" class="btn btn-outline-white btn-lg">
+                        <a href="#contact" class="btn btn-outline-white btn-lg" data-i18n="btn_partner">
                             <i class="fa-solid fa-envelope"></i> Liên Hệ Hợp Tác
                         </a>
                     </div>
@@ -110,38 +129,38 @@
             <div class="container">
                 <div class="about-grid">
                     <div class="about-text">
-                        <div class="section-tag">GIỚI THIỆU</div>
-                        <h2 class="section-title">Đối Tác Tự Động Hóa Toàn Diện Cho Nhà Máy Của Bạn</h2>
-                        <p class="about-p-lead">
+                        <div class="section-tag" data-i18n="about_tag">GIỚI THIỆU</div>
+                        <h2 class="section-title" data-i18n="about_title">Đối Tác Tự Động Hóa Toàn Diện Cho Nhà Máy Của Bạn</h2>
+                        <p class="about-p-lead" data-i18n="about_lead">
                             <strong>BKFASI (Bách Khoa Factory Automation Systems Integrator)</strong> là đơn vị tiên phong trong lĩnh vực tích hợp hệ thống tự động hóa công nghiệp và chế tạo máy thông minh tại Việt Nam.
                         </p>
-                        <p class="about-p">
+                        <p class="about-p" data-i18n="about_p">
                             Chúng tôi tập trung vào việc nghiên cứu, phát triển và ứng dụng công nghệ điều khiển chuyển động tiên tiến, robot tự động hóa trong sản xuất lẫn các dòng robot phục vụ đời sống: robot bán hàng, robot pha chế cà phê, robot pha trà, robot làm kem.
                         </p>
                         <div class="about-stats-row">
                             <div class="mini-stat">
                                 <span class="num">100%</span>
-                                <span class="lbl">Tiêu chuẩn quốc tế NEC, NFPA</span>
+                                <span class="lbl" data-i18n="stat1_lbl">Tiêu chuẩn quốc tế NEC, NFPA</span>
                             </div>
                             <div class="mini-stat">
                                 <span class="num">24/7</span>
-                                <span class="lbl">Hỗ trợ kỹ thuật chuyên sâu</span>
+                                <span class="lbl" data-i18n="stat2_lbl">Hỗ trợ kỹ thuật chuyên sâu</span>
                             </div>
                             <div class="mini-stat">
-                                <span class="num">TOÀN QUỐC</span>
-                                <span class="lbl">Triển khai dự án nhanh chóng</span>
+                                <span class="num" data-i18n="stat3_num">TOÀN QUỐC</span>
+                                <span class="lbl" data-i18n="stat3_lbl">Triển khai dự án nhanh chóng</span>
                             </div>
                         </div>
                     </div>
                     <div class="about-card-display">
                         <div class="brand-card">
                             <img src="images/logo.png" alt="BKFASI Tech" class="brand-card-logo">
-                            <h3>HỆ THỐNG TỰ ĐỘNG HÓA BÁCH KHOA</h3>
-                            <p class="brand-quote">"Đột phá công nghệ - Tối ưu vận hành - Đảm bảo an toàn tuyệt đối"</p>
+                            <h3 data-i18n="card_title">HỆ THỐNG TỰ ĐỘNG HÓA BÁCH KHOA</h3>
+                            <p class="brand-quote" data-i18n="card_quote">"Đột phá công nghệ - Tối ưu vận hành - Đảm bảo an toàn tuyệt đối"</p>
                             <div class="brand-list">
-                                <div><i class="fa-solid fa-check-circle"></i> Đội ngũ kỹ sư an toàn chức năng được chứng nhận</div>
-                                <div><i class="fa-solid fa-check-circle"></i> Làm chủ công nghệ phần mềm & phần cứng</div>
-                                <div><i class="fa-solid fa-check-circle"></i> Tư vấn & khảo sát tận nơi cho nhà máy</div>
+                                <div><i class="fa-solid fa-check-circle"></i> <span data-i18n="check1">Đội ngũ kỹ sư an toàn chức năng được chứng nhận</span></div>
+                                <div><i class="fa-solid fa-check-circle"></i> <span data-i18n="check2">Làm chủ công nghệ phần mềm & phần cứng</span></div>
+                                <div><i class="fa-solid fa-check-circle"></i> <span data-i18n="check3">Tư vấn & khảo sát tận nơi cho nhà máy</span></div>
                             </div>
                         </div>
                     </div>
@@ -153,9 +172,9 @@
         <section class="section solutions-section" id="solutions">
             <div class="container">
                 <div class="section-header text-center">
-                    <div class="section-tag">NĂNG LỰC CỐT LÕI</div>
-                    <h2 class="section-title">Giải Pháp Tự Động Hóa</h2>
-                    <p class="section-desc mx-auto">
+                    <div class="section-tag" data-i18n="sol_tag">NĂNG LỰC CỐT LÕI</div>
+                    <h2 class="section-title" data-i18n="sol_title">Giải Pháp Tự Động Hóa</h2>
+                    <p class="section-desc mx-auto" data-i18n="sol_desc">
                         Thiết kế, tích hợp và triển khai hệ thống toàn diện theo tiêu chuẩn an toàn công nghiệp khắt khe nhất.
                     </p>
                 </div>
@@ -168,14 +187,14 @@
                             <div class="sol-badge">PLC Automation</div>
                         </div>
                         <div class="sol-body">
-                            <h3>Bộ Điều Khiển Lập Trình (PLC)</h3>
-                            <p>
+                            <h3 data-i18n="plc_title">Bộ Điều Khiển Lập Trình (PLC)</h3>
+                            <p data-i18n="plc_desc">
                                 Thiết kế kiến trúc điều khiển, lập trình PLC chuyên sâu cho các dây chuyền lắp ráp và chế tạo. Tối ưu chu trình hoạt động, nâng cao năng suất và giảm thiểu thời gian dừng máy.
                             </p>
                             <ul class="sol-features">
-                                <li><i class="fa-solid fa-angle-right"></i> Lập trình logic điều khiển tốc độ cao</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Tích hợp SCADA giám sát vận hành</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Nâng cấp hệ thống PLC cũ lên chuẩn mới</li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="plc_f1">Lập trình logic điều khiển tốc độ cao</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="plc_f2">Tích hợp SCADA giám sát vận hành</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="plc_f3">Nâng cấp hệ thống PLC cũ lên chuẩn mới</span></li>
                             </ul>
                         </div>
                     </div>
@@ -187,14 +206,14 @@
                             <div class="sol-badge">Motion Control</div>
                         </div>
                         <div class="sol-body">
-                            <h3>Hệ Thống Điều Khiển Chuyển Động & Truyền Động</h3>
-                            <p>
+                            <h3 data-i18n="motion_title">Hệ Thống Điều Khiển Chuyển Động & Truyền Động</h3>
+                            <p data-i18n="motion_desc">
                                 Giải pháp truyền động servo chính xác cao, đồng bộ đa trục cho dây chuyền đóng gói, in ấn, dệt may và gia công cơ khí chính xác. Đảm bảo độ mượt mà và sai số cực thấp.
                             </p>
                             <ul class="sol-features">
-                                <li><i class="fa-solid fa-angle-right"></i> Điều khiển đa trục đồng bộ thời gian thực</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Tối ưu quán tính và gia tốc servo</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Cắt giảm tiêu hao năng lượng truyền động</li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="motion_f1">Điều khiển đa trục đồng bộ thời gian thực</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="motion_f2">Tối ưu quán tính và gia tốc servo</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="motion_f3">Cắt giảm tiêu hao năng lượng truyền động</span></li>
                             </ul>
                         </div>
                     </div>
@@ -206,14 +225,14 @@
                             <div class="sol-badge">MES / IIoT</div>
                         </div>
                         <div class="sol-body">
-                            <h3>Hệ Thống Thông Tin Sản Xuất (MES)</h3>
-                            <p>
+                            <h3 data-i18n="mes_title">Hệ Thống Thông Tin Sản Xuất (MES)</h3>
+                            <p data-i18n="mes_desc">
                                 Kết nối dữ liệu máy móc sàn xưởng lên hệ thống quản trị trung tâm theo thời gian thực. Theo dõi chỉ số OEE, kiểm soát chất lượng, truy xuất nguồn gốc và dự báo bảo trì thông minh.
                             </p>
                             <ul class="sol-features">
-                                <li><i class="fa-solid fa-angle-right"></i> Thu thập dữ liệu máy móc tự động</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Báo cáo OEE, chất lượng theo ca</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Tích hợp liền mạch với ERP</li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="mes_f1">Thu thập dữ liệu máy móc tự động</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="mes_f2">Báo cáo OEE, chất lượng theo ca</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="mes_f3">Tích hợp liền mạch với ERP</span></li>
                             </ul>
                         </div>
                     </div>
@@ -225,14 +244,14 @@
                             <div class="sol-badge">Robotics & AI</div>
                         </div>
                         <div class="sol-body">
-                            <h3>Hệ Thống Robot Công Nghiệp & Dịch Vụ</h3>
-                            <p>
+                            <h3 data-i18n="robot_title">Hệ Thống Robot Công Nghiệp & Dịch Vụ</h3>
+                            <p data-i18n="robot_desc">
                                 Tích hợp Robot công nghiệp bốc xếp (palletizing), gắp đặt (pick & place), hàn, sơn; cùng hệ thống robot thương mại thông minh: Robot bán hàng, Robot pha chế cà phê, pha trà, làm kem.
                             </p>
                             <ul class="sol-features">
-                                <li><i class="fa-solid fa-angle-right"></i> Robot công nghiệp & Robot cộng tác (Cobot)</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Robot F&B tự động (cà phê, trà, kem)</li>
-                                <li><i class="fa-solid fa-angle-right"></i> Tích hợp thị giác máy tính (Machine Vision)</li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="robot_f1">Robot công nghiệp & Robot cộng tác (Cobot)</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="robot_f2">Robot F&B tự động (cà phê, trà, kem)</span></li>
+                                <li><i class="fa-solid fa-angle-right"></i> <span data-i18n="robot_f3">Tích hợp thị giác máy tính (Machine Vision)</span></li>
                             </ul>
                         </div>
                     </div>
@@ -249,12 +268,12 @@
                     </div>
                     <div class="quote-content">
                         <i class="fa-solid fa-quote-left quote-icon"></i>
-                        <blockquote class="quote-text">
+                        <blockquote class="quote-text" data-i18n="quote1_text">
                             “Chiến lược phát triển của chúng tôi là xây dựng mối quan hệ lâu dài với khách hàng thông qua việc cung cấp thiết kế vượt trội, triển khai hiệu quả và hỗ trợ tận tâm cho các hệ thống điều khiển tự động hóa, giải pháp thông tin sản xuất và hệ thống robot.”
                         </blockquote>
                         <div class="quote-author">
-                            <h4>Nguyễn Chí Hưng</h4>
-                            <p>Đồng sáng lập - Đồng Giám đốc điều hành - Giám đốc kỹ thuật (CTO)</p>
+                            <h4 data-i18n="quote1_author">Nguyễn Chí Hưng</h4>
+                            <p data-i18n="quote1_role">Đồng sáng lập - Đồng Giám đốc điều hành - Giám đốc kỹ thuật (CTO)</p>
                             <span class="company-sub">BKFASI - Factory Automation Systems Intergrator</span>
                         </div>
                     </div>
@@ -266,9 +285,9 @@
         <section class="section industries-section bg-light" id="industries">
             <div class="container">
                 <div class="section-header text-center">
-                    <div class="section-tag">ỨNG DỤNG THỰC TIỄN</div>
-                    <h2 class="section-title">Ngành Công Nghiệp</h2>
-                    <p class="section-desc mx-auto">
+                    <div class="section-tag" data-i18n="ind_tag">ỨNG DỤNG THỰC TIỄN</div>
+                    <h2 class="section-title" data-i18n="ind_title">Ngành Công Nghiệp</h2>
+                    <p class="section-desc mx-auto" data-i18n="ind_desc">
                         BKFASI cung cấp giải pháp chuyên biệt, đáp ứng các tiêu chuẩn khắt khe cho từng lĩnh vực sản xuất công nghiệp.
                     </p>
                 </div>
@@ -278,64 +297,64 @@
                         <div class="ind-icon-wrap">
                             <img src="images/industry_auto.png" alt="Ngành Ô tô" loading="lazy">
                         </div>
-                        <h3>Ô Tô</h3>
-                        <p>Dây chuyền hàn dập, lắp ráp linh kiện, sơn tự động và kiểm tra chất lượng an toàn cao.</p>
+                        <h3 data-i18n="ind_auto_t">Ô Tô</h3>
+                        <p data-i18n="ind_auto_d">Dây chuyền hàn dập, lắp ráp linh kiện, sơn tự động và kiểm tra chất lượng an toàn cao.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_building.png" alt="Vật liệu xây dựng" loading="lazy">
                         </div>
-                        <h3>Vật Liệu Xây Dựng</h3>
-                        <p>Hệ thống định lượng, phối trộn tự động, đóng bao xi măng, gạch men và kính xây dựng.</p>
+                        <h3 data-i18n="ind_bldg_t">Vật Liệu Xây Dựng</h3>
+                        <p data-i18n="ind_bldg_d">Hệ thống định lượng, phối trộn tự động, đóng bao xi măng, gạch men và kính xây dựng.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_consumer.png" alt="Hàng tiêu dùng" loading="lazy">
                         </div>
-                        <h3>Hàng Tiêu Dùng</h3>
-                        <p>Tự động hóa dây chuyền đóng gói tốc độ cao, dán nhãn, đóng thùng và xếp pallet thông minh.</p>
+                        <h3 data-i18n="ind_cons_t">Hàng Tiêu Dùng</h3>
+                        <p data-i18n="ind_cons_d">Tự động hóa dây chuyền đóng gói tốc độ cao, dán nhãn, đóng thùng và xếp pallet thông minh.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_paper.png" alt="Giấy & In ấn" loading="lazy">
                         </div>
-                        <h3>Giấy & In Ấn</h3>
-                        <p>Kiểm soát độ căng cuộn, đồng bộ truyền động nhiều trục và cắt cuộn chính xác cao.</p>
+                        <h3 data-i18n="ind_paper_t">Giấy & In Ấn</h3>
+                        <p data-i18n="ind_paper_d">Kiểm soát độ căng cuộn, đồng bộ truyền động nhiều trục và cắt cuộn chính xác cao.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_metals.png" alt="Kim loại" loading="lazy">
                         </div>
-                        <h3>Kim Loại</h3>
-                        <p>Dây chuyền cán kéo thép, máy chấn dập CNC, cánh tay robot bốc dỡ phôi kim loại nặng.</p>
+                        <h3 data-i18n="ind_metal_t">Kim Loại</h3>
+                        <p data-i18n="ind_metal_d">Dây chuyền cán kéo thép, máy chấn dập CNC, cánh tay robot bốc dỡ phôi kim loại nặng.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_food.png" alt="Thực phẩm & Đồ uống" loading="lazy">
                         </div>
-                        <h3>Thực Phẩm & Đồ Uống</h3>
-                        <p>Dây chuyền chiết rót vô trùng, đóng nắp, thanh trùng và đóng gói đạt chuẩn vệ sinh an toàn.</p>
+                        <h3 data-i18n="ind_food_t">Thực Phẩm & Đồ Uống</h3>
+                        <p data-i18n="ind_food_d">Dây chuyền chiết rót vô trùng, đóng nắp, thanh trùng và đóng gói đạt chuẩn vệ sinh an toàn.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_aerospace.png" alt="Hàng không vũ trụ" loading="lazy">
                         </div>
-                        <h3>Hàng Không Vũ Trụ</h3>
-                        <p>Gia công chi tiết siêu chính xác, kiểm tra khuyết tật bằng camera quang học và robot chuyên dụng.</p>
+                        <h3 data-i18n="ind_aero_t">Hàng Không Vũ Trụ</h3>
+                        <p data-i18n="ind_aero_d">Gia công chi tiết siêu chính xác, kiểm tra khuyết tật bằng camera quang học và robot chuyên dụng.</p>
                     </div>
 
                     <div class="ind-card">
                         <div class="ind-icon-wrap">
                             <img src="images/industry_general.png" alt="Ngành công nghiệp chung" loading="lazy">
                         </div>
-                        <h3>Ngành Công Nghiệp Chung</h3>
-                        <p>Tùy biến các giải pháp tích hợp tự động hóa linh hoạt theo từng bài toán kỹ thuật đặc thù.</p>
+                        <h3 data-i18n="ind_gen_t">Ngành Công Nghiệp Chung</h3>
+                        <p data-i18n="ind_gen_d">Tùy biến các giải pháp tích hợp tự động hóa linh hoạt theo từng bài toán kỹ thuật đặc thù.</p>
                     </div>
                 </div>
             </div>
@@ -347,12 +366,12 @@
                 <div class="quote-wrapper reverse">
                     <div class="quote-content">
                         <i class="fa-solid fa-shield-halved quote-icon text-primary"></i>
-                        <blockquote class="quote-text">
+                        <blockquote class="quote-text" data-i18n="quote2_text">
                             “An toàn cho máy móc và các cell robot luôn là ưu tiên hàng đầu của khách hàng, và BKFASI cam kết luôn cập nhật các tiêu chuẩn mới nhất từ NEC, NFPA, ANSI B11 và ANSI/RIA 1506. Các kỹ sư an toàn chức năng được chứng nhận cùng đội ngũ kỹ thuật của chúng tôi đảm bảo rằng an toàn được tích hợp chặt chẽ trong từng thiết kế của mỗi giải pháp tự động hóa.”
                         </blockquote>
                         <div class="quote-author">
-                            <h4>Shim In Bo</h4>
-                            <p>Đồng sáng lập - Đồng Giám đốc điều hành - Giám đốc tài chính (CFO)</p>
+                            <h4 data-i18n="quote2_author">Shim In Bo</h4>
+                            <p data-i18n="quote2_role">Đồng sáng lập - Đồng Giám đốc điều hành - Giám đốc tài chính (CFO)</p>
                             <span class="company-sub">BKFASI - Factory Automation Systems Intergrator</span>
                         </div>
                     </div>
@@ -367,9 +386,9 @@
         <section class="section testimonials-section bg-light" id="testimonials">
             <div class="container">
                 <div class="section-header text-center">
-                    <div class="section-tag">ĐÁNH GIÁ TỪ ĐỐI TÁC</div>
-                    <h2 class="section-title">Cảm Nhận Của Khách Hàng</h2>
-                    <p class="section-desc mx-auto">
+                    <div class="section-tag" data-i18n="testi_tag">ĐÁNH GIÁ TỪ ĐỐI TÁC</div>
+                    <h2 class="section-title" data-i18n="testi_title">Cảm Nhận Của Khách Hàng</h2>
+                    <p class="section-desc mx-auto" data-i18n="testi_desc">
                         Sự tin tưởng và hài lòng của khách hàng là thước đo giá trị cao nhất cho các giải pháp của BKFASI.
                     </p>
                 </div>
@@ -380,14 +399,14 @@
                         <div class="testi-stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testi-text">
+                        <p class="testi-text" data-i18n="t1_text">
                             “Chúng tôi đã hợp tác với BKFASI trong một dự án nâng cấp hệ thống tự động hóa dây chuyền lắp ráp. Tôi rất ấn tượng với đội ngũ kỹ sư chuyên môn cao, làm việc chuyên nghiệp và hỗ trợ tận tâm. Các giải pháp PLC mà BKFASI triển khai không chỉ giúp tăng năng suất mà còn tối ưu hóa quy trình sản xuất của chúng tôi một cách đáng kể.”
                         </p>
                         <div class="testi-author">
                             <div class="author-avatar"><i class="fa-solid fa-user-tie"></i></div>
                             <div>
-                                <h5>Nguyễn Minh Quân</h5>
-                                <span>Giám đốc Kỹ thuật – Công ty TNHH Cơ Khí Minh Quang</span>
+                                <h5 data-i18n="t1_name">Nguyễn Minh Quân</h5>
+                                <span data-i18n="t1_role">Giám đốc Kỹ thuật – Công ty TNHH Cơ Khí Minh Quang</span>
                             </div>
                         </div>
                     </div>
@@ -397,14 +416,14 @@
                         <div class="testi-stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testi-text">
+                        <p class="testi-text" data-i18n="t2_text">
                             “Sản phẩm và dịch vụ từ BKFASI thực sự vượt ngoài mong đợi. Hệ thống điều khiển chuyển động mà họ tích hợp cho dây chuyền đóng gói của nhà máy hoạt động rất ổn định, chính xác và giúp chúng tôi tiết kiệm đáng kể chi phí nhân công. Đây là một đối tác mà tôi hoàn toàn tin tưởng.”
                         </p>
                         <div class="testi-author">
                             <div class="author-avatar"><i class="fa-solid fa-user-tie"></i></div>
                             <div>
-                                <h5>Trần Thị Bích Ngọc</h5>
-                                <span>Trưởng phòng Sản xuất – Công ty Cổ phần Dược phẩm An Việt</span>
+                                <h5 data-i18n="t2_name">Trần Thị Bích Ngọc</h5>
+                                <span data-i18n="t2_role">Trưởng phòng Sản xuất – Công ty Cổ phần Dược phẩm An Việt</span>
                             </div>
                         </div>
                     </div>
@@ -414,14 +433,14 @@
                         <div class="testi-stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testi-text">
+                        <p class="testi-text" data-i18n="t3_text">
                             “BKFASI là một trong số ít những đơn vị tích hợp hệ thống tại Việt Nam có khả năng triển khai các giải pháp MES một cách bài bản và hiệu quả. Hệ thống thông tin sản xuất mà họ cung cấp giúp chúng tôi kiểm soát dữ liệu vận hành theo thời gian thực, nâng cao năng lực quản trị nhà máy rõ rệt.”
                         </p>
                         <div class="testi-author">
                             <div class="author-avatar"><i class="fa-solid fa-user-tie"></i></div>
                             <div>
-                                <h5>Lê Văn Hùng</h5>
-                                <span>Giám đốc Điều hành – Nhà máy Nhựa Phú An</span>
+                                <h5 data-i18n="t3_name">Lê Văn Hùng</h5>
+                                <span data-i18n="t3_role">Giám đốc Điều hành – Nhà máy Nhựa Phú An</span>
                             </div>
                         </div>
                     </div>
@@ -431,14 +450,14 @@
                         <div class="testi-stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testi-text">
+                        <p class="testi-text" data-i18n="t4_text">
                             “Tôi đánh giá rất cao khả năng tư vấn và triển khai của BKFASI. Từ robot công nghiệp đến giải pháp điều khiển, mọi thứ đều được tính toán kỹ lưỡng và vận hành trơn tru. Họ không chỉ cung cấp thiết bị mà còn mang đến một hệ sinh thái giải pháp tự động hóa toàn diện.”
                         </p>
                         <div class="testi-author">
                             <div class="author-avatar"><i class="fa-solid fa-user-tie"></i></div>
                             <div>
-                                <h5>Phạm Thị Thu Hà</h5>
-                                <span>Trưởng bộ phận Bảo trì – Công ty TNHH Thực phẩm Ánh Dương</span>
+                                <h5 data-i18n="t4_name">Phạm Thị Thu Hà</h5>
+                                <span data-i18n="t4_role">Trưởng bộ phận Bảo trì – Công ty TNHH Thực phẩm Ánh Dương</span>
                             </div>
                         </div>
                     </div>
@@ -448,14 +467,14 @@
                         <div class="testi-stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testi-text">
+                        <p class="testi-text" data-i18n="t5_text">
                             “Hợp tác với BKFASI là một trải nghiệm rất tích cực. Họ luôn đồng hành cùng chúng tôi từ giai đoạn khảo sát đến khi vận hành hệ thống. Tư duy hệ thống và cách tổ chức thi công chuyên nghiệp giúp các dự án hoàn thành đúng tiến độ và chất lượng cao.”
                         </p>
                         <div class="testi-author">
                             <div class="author-avatar"><i class="fa-solid fa-user-tie"></i></div>
                             <div>
-                                <h5>Đinh Quốc Bảo</h5>
-                                <span>Quản lý Dự án – Công ty TNHH Cơ điện Tân Thành</span>
+                                <h5 data-i18n="t5_name">Đinh Quốc Bảo</h5>
+                                <span data-i18n="t5_role">Quản lý Dự án – Công ty TNHH Cơ điện Tân Thành</span>
                             </div>
                         </div>
                     </div>
@@ -467,9 +486,9 @@
         <section class="section contact-section" id="contact">
             <div class="container contact-container">
                 <div class="contact-info">
-                    <div class="section-tag">KẾT NỐI VỚI BKFASI</div>
-                    <h2 class="section-title">Liên Hệ Hợp Tác & Tư Vấn Kỹ Thuật</h2>
-                    <p class="section-desc">
+                    <div class="section-tag" data-i18n="contact_tag">KẾT NỐI VỚI BKFASI</div>
+                    <h2 class="section-title" data-i18n="contact_title">Liên Hệ Hợp Tác & Tư Vấn Kỹ Thuật</h2>
+                    <p class="section-desc" data-i18n="contact_desc">
                         Quý khách hàng có nhu cầu tư vấn giải pháp PLC, Motion Control, MES hoặc hệ thống Robot tự động hóa, vui lòng liên hệ ngay với chúng tôi:
                     </p>
 
@@ -485,15 +504,15 @@
                         <div class="contact-item">
                             <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
                             <div>
-                                <h5>Địa Chỉ Trụ Sở:</h5>
-                                <p>65/11/1295 Đường Giải Phóng, Phường Hoàng Mai, Thành Phố Hà Nội.</p>
+                                <h5 data-i18n="c_hq">Địa Chỉ Trụ Sở:</h5>
+                                <p data-i18n="c_hq_val">65/11/1295 Đường Giải Phóng, Phường Hoàng Mai, Thành Phố Hà Nội.</p>
                             </div>
                         </div>
 
                         <div class="contact-item">
                             <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
                             <div>
-                                <h5>Điện Thoại / Hotline:</h5>
+                                <h5 data-i18n="c_phone">Điện Thoại / Hotline:</h5>
                                 <p><a href="tel:0915841887" class="highlight-phone">091 584 1887</a></p>
                             </div>
                         </div>
@@ -501,8 +520,8 @@
                         <div class="contact-item">
                             <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
                             <div>
-                                <h5>Hộp Thư Điện Tử (Email):</h5>
-                                <p>
+                                <h5 data-i18n="c_email">Hộp Thư Điện Tử (Email):</h5>
+                                <p data-i18n="c_email_desc">
                                     Phòng Kinh doanh: <a href="mailto:sale@bkfasi.com">sale@bkfasi.com</a><br>
                                     Phòng Kỹ thuật: <a href="mailto:tech@bkfasi.com">tech@bkfasi.com</a><br>
                                     Hỗ trợ khách hàng: <a href="mailto:support@bkfasi.com">support@bkfasi.com</a>
@@ -514,43 +533,43 @@
 
                 <div class="contact-form-wrapper">
                     <div class="form-header">
-                        <h3>Gửi Yêu Cầu Khảo Sát / Tư Vấn</h3>
-                        <p>Đội ngũ kỹ sư BKFASI sẽ phản hồi trong vòng 24 giờ</p>
+                        <h3 data-i18n="form_title">Gửi Yêu Cầu Khảo Sát / Tư Vấn</h3>
+                        <p data-i18n="form_subtitle">Đội ngũ kỹ sư BKFASI sẽ phản hồi trong vòng 24 giờ</p>
                     </div>
                     <form id="contactForm" onsubmit="handleContactSubmit(event)">
                         <div class="form-group">
-                            <label for="c_name">Họ và Tên *</label>
-                            <input type="text" id="c_name" name="c_name" placeholder="Nguyễn Văn A" required>
+                            <label for="c_name" data-i18n="lbl_name">Họ và Tên *</label>
+                            <input type="text" id="c_name" name="c_name" placeholder="Nguyễn Văn A" data-i18n-placeholder="ph_name" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="c_phone">Số Điện Thoại *</label>
-                                <input type="tel" id="c_phone" name="c_phone" placeholder="091 xxx xxxx" required>
+                                <label for="c_phone" data-i18n="lbl_phone">Số Điện Thoại *</label>
+                                <input type="tel" id="c_phone" name="c_phone" placeholder="091 xxx xxxx" data-i18n-placeholder="ph_phone" required>
                             </div>
                             <div class="form-group">
-                                <label for="c_email">Email</label>
-                                <input type="email" id="c_email" name="c_email" placeholder="email@company.com">
+                                <label for="c_email" data-i18n="lbl_email">Email</label>
+                                <input type="email" id="c_email" name="c_email" placeholder="email@company.com" data-i18n-placeholder="ph_email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="c_solution">Giải Pháp Quan Tâm</label>
+                            <label for="c_solution" data-i18n="lbl_sol">Giải Pháp Quan Tâm</label>
                             <select id="c_solution" name="c_solution">
-                                <option value="plc">Bộ điều khiển lập trình (PLC)</option>
-                                <option value="motion">Hệ thống điều khiển chuyển động (Motion Control)</option>
-                                <option value="mes">Hệ thống thông tin sản xuất (MES)</option>
-                                <option value="robot">Hệ thống Robot công nghiệp / Robot dịch vụ</option>
-                                <option value="other">Tư vấn nâng cấp nhà máy tổng thể</option>
+                                <option value="plc" data-i18n="opt_plc">Bộ điều khiển lập trình (PLC)</option>
+                                <option value="motion" data-i18n="opt_motion">Hệ thống điều khiển chuyển động (Motion Control)</option>
+                                <option value="mes" data-i18n="opt_mes">Hệ thống thông tin sản xuất (MES)</option>
+                                <option value="robot" data-i18n="opt_robot">Hệ thống Robot công nghiệp / Robot dịch vụ</option>
+                                <option value="other" data-i18n="opt_other">Tư vấn nâng cấp nhà máy tổng thể</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="c_message">Mô Tả Nhu Cầu Hoặc Quy Mô Nhà Xưởng</label>
-                            <textarea id="c_message" name="c_message" rows="4" placeholder="Mô tả sơ bộ về hệ thống cần nâng cấp hoặc bài toán tự động hóa cần giải quyết..."></textarea>
+                            <label for="c_message" data-i18n="lbl_msg">Mô Tả Nhu Cầu Hoặc Quy Mô Nhà Xưởng</label>
+                            <textarea id="c_message" name="c_message" rows="4" placeholder="Mô tả sơ bộ về hệ thống cần nâng cấp hoặc bài toán tự động hóa cần giải quyết..." data-i18n-placeholder="ph_msg"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">
+                        <button type="submit" class="btn btn-primary btn-block" data-i18n="btn_submit">
                             <i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu Cho BKFASI
                         </button>
                     </form>
-                    <div id="contactSuccessAlert" class="alert-box success d-none">
+                    <div id="contactSuccessAlert" class="alert-box success d-none" data-i18n="alert_success">
                         <i class="fa-solid fa-circle-check"></i> Cảm ơn quý khách! BKFASI đã tiếp nhận yêu cầu và sẽ liên hệ ngay.
                     </div>
                 </div>
@@ -563,7 +582,7 @@
         <div class="container footer-grid">
             <div class="footer-col col-brand">
                 <img src="images/logo.png" alt="BKFASI" class="footer-logo-img">
-                <p class="brand-desc">
+                <p class="brand-desc" data-i18n="f_brand_desc">
                     <strong>BKFASI – CÔNG TY CỔ PHẦN TÍCH HỢP TỰ ĐỘNG HÓA BÁCH KHOA</strong><br>
                     Factory Automation Systems Intergrator. Tiên phong giải pháp tự động hóa công nghiệp và robot tại Việt Nam.
                 </p>
@@ -576,31 +595,29 @@
             </div>
 
             <div class="footer-col">
-                <h4>Giải Pháp</h4>
+                <h4 data-i18n="f_solutions">Giải Pháp</h4>
                 <ul>
-                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> Bộ điều khiển lập trình (PLC)</a></li>
-                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> Điều khiển chuyển động (Motion Control)</a></li>
-                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> Hệ thống thông tin (MES)</a></li>
-                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> Robot công nghiệp & dịch vụ</a></li>
-                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> Robot pha chế cà phê, trà, kem</a></li>
+                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> <span data-i18n="plc_title">Bộ điều khiển lập trình (PLC)</span></a></li>
+                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> <span data-i18n="motion_title">Điều khiển chuyển động (Motion Control)</span></a></li>
+                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> <span data-i18n="mes_title">Hệ thống thông tin (MES)</span></a></li>
+                    <li><a href="#solutions"><i class="fa-solid fa-angle-right"></i> <span data-i18n="robot_title">Robot công nghiệp & dịch vụ</span></a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Ngành Công Nghiệp</h4>
+                <h4 data-i18n="f_industries">Ngành Công Nghiệp</h4>
                 <ul>
-                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> Công nghiệp Ô tô</a></li>
-                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> Thực phẩm & Đồ uống</a></li>
-                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> Vật liệu xây dựng & Xi măng</a></li>
-                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> Kim loại & Cơ khí chính xác</a></li>
-                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> Hàng tiêu dùng & Giấy</a></li>
+                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> <span data-i18n="ind_auto_t">Công nghiệp Ô tô</span></a></li>
+                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> <span data-i18n="ind_food_t">Thực phẩm & Đồ uống</span></a></li>
+                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> <span data-i18n="ind_bldg_t">Vật liệu xây dựng & Xi măng</span></a></li>
+                    <li><a href="#industries"><i class="fa-solid fa-angle-right"></i> <span data-i18n="ind_metal_t">Kim loại & Cơ khí chính xác</span></a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Thông Tin Liên Hệ</h4>
+                <h4 data-i18n="f_contact">Thông Tin Liên Hệ</h4>
                 <ul class="contact-list">
-                    <li><i class="fa-solid fa-location-dot"></i> 65/11/1295 Đường Giải Phóng, P. Hoàng Mai, Hà Nội.</li>
+                    <li><i class="fa-solid fa-location-dot"></i> <span data-i18n="c_hq_val">65/11/1295 Đường Giải Phóng, P. Hoàng Mai, Hà Nội.</span></li>
                     <li><i class="fa-solid fa-phone"></i> Hotline: <a href="tel:0915841887">091 584 1887</a></li>
                     <li><i class="fa-solid fa-envelope"></i> Kinh doanh: <a href="mailto:sale@bkfasi.com">sale@bkfasi.com</a></li>
                     <li><i class="fa-solid fa-envelope"></i> Kỹ thuật: <a href="mailto:tech@bkfasi.com">tech@bkfasi.com</a></li>
@@ -611,7 +628,7 @@
 
         <div class="footer-bottom">
             <div class="container footer-bottom-inner">
-                <p>Bản quyền từ 2022 - 2025 thuộc về <a href="https://bkfasi.com" target="_blank">bkfasi.com</a>. All rights reserved.</p>
+                <p data-i18n="f_rights">Bản quyền từ 2022 - 2025 thuộc về <a href="https://bkfasi.com" target="_blank">bkfasi.com</a>. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Tiêu chuẩn NEC / NFPA</a>
                     <span>•</span>
@@ -626,7 +643,8 @@
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
-    <!-- Main JavaScript -->
+    <!-- Translations & Main JavaScript -->
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

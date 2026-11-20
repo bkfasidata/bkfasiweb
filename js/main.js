@@ -1,10 +1,86 @@
 /**
  * BKFASI - Factory Automation Systems Intergrator
- * Main JavaScript Interactions
+ * Main JavaScript Interactions & Dynamic Multi-Language Switcher
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Sticky Navigation Bar & Shadow
+    // ==========================================
+    // 1. Dynamic Multi-Language Switcher (i18n)
+    // ==========================================
+    const langSelect = document.getElementById('langSelect');
+    const mobileLangSelect = document.getElementById('mobileLangSelect');
+
+    function setLanguage(lang) {
+        if (!translations || !translations[lang]) {
+            lang = 'vi'; // Fallback to Vietnamese
+        }
+
+        const dict = translations[lang];
+
+        // Update document language attribute
+        document.documentElement.lang = lang;
+
+        // 1. Update text content or innerHTML for elements with [data-i18n]
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key] !== undefined) {
+                // If it's an option or input element
+                if (el.tagName === 'OPTION') {
+                    el.textContent = dict[key];
+                } else {
+                    el.innerHTML = dict[key];
+                }
+            }
+        });
+
+        // 2. Update placeholder for elements with [data-i18n-placeholder]
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (dict[key] !== undefined) {
+                el.placeholder = dict[key];
+            }
+        });
+
+        // 3. Synchronize select dropdown values
+        if (langSelect) langSelect.value = lang;
+        if (mobileLangSelect) mobileLangSelect.value = lang;
+
+        // 4. Persist user selection
+        try {
+            localStorage.setItem('bkfasi_selected_lang', lang);
+        } catch (e) {
+            console.warn('LocalStorage unavailable:', e);
+        }
+    }
+
+    // Initialize Language from localStorage or default to 'vi'
+    let currentLang = 'vi';
+    try {
+        const saved = localStorage.getItem('bkfasi_selected_lang');
+        if (saved && translations[saved]) {
+            currentLang = saved;
+        }
+    } catch (e) {}
+
+    // Apply initial language
+    setLanguage(currentLang);
+
+    // Event listeners on dropdown changes
+    if (langSelect) {
+        langSelect.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+    }
+
+    if (mobileLangSelect) {
+        mobileLangSelect.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+    }
+
+    // ==========================================
+    // 2. Sticky Navigation Bar & Shadow
+    // ==========================================
     const header = document.getElementById('navbar');
     const backToTopBtn = document.getElementById('backToTop');
 
@@ -23,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Smooth Scroll to Top
+    // ==========================================
+    // 3. Smooth Scroll to Top
+    // ==========================================
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
@@ -33,7 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Mobile Menu Toggle
+    // ==========================================
+    // 4. Mobile Menu Toggle
+    // ==========================================
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -61,7 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. ScrollSpy for Active Nav Link
+    // ==========================================
+    // 5. ScrollSpy for Active Nav Link
+    // ==========================================
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
         const scrollY = window.pageYOffset;
@@ -81,16 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    // 5. Language selector toggle alert simulation
-    const langLinks = document.querySelectorAll('.lang-switch a');
-    langLinks.forEach(lang => {
-        lang.addEventListener('click', (e) => {
-            e.preventDefault();
-            langLinks.forEach(l => l.classList.remove('active'));
-            lang.classList.add('active');
-        });
-    });
 });
 
 /**
@@ -104,7 +176,7 @@ function handleContactSubmit(event) {
     const originalText = submitBtn.innerHTML;
 
     // Show loading state
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi yêu cầu...';
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ...';
     submitBtn.disabled = true;
 
     setTimeout(() => {

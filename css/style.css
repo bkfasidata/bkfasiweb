@@ -211,35 +211,77 @@ img {
     color: var(--white);
 }
 
-.lang-switch {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.lang-switch a {
+.lang-selector-box {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #cbd5e1;
-    padding: 3px 6px;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3px 10px;
     border-radius: var(--radius-sm);
     transition: var(--transition);
 }
 
-.lang-switch a.active,
-.lang-switch a:hover {
-    color: var(--white);
-    background-color: rgba(255, 255, 255, 0.12);
+.lang-selector-box:hover,
+.lang-selector-box:focus-within {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
-.lang-switch img {
-    width: 16px;
-    height: 11px;
-    object-fit: cover;
-    border-radius: 2px;
+.lang-globe-icon {
+    color: var(--accent);
+    font-size: 0.85rem;
+}
+
+.lang-select {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 0;
+}
+
+.lang-select option {
+    background-color: #0d1b2a;
+    color: #ffffff;
+    padding: 6px 10px;
+}
+
+.mobile-lang-wrap {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gray-border);
+}
+
+.mobile-lang-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-lang-wrap .lang-select {
+    background: var(--gray-bg);
+    color: var(--dark);
+    border: 1px solid var(--gray-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.mobile-lang-wrap .lang-select option {
+    background-color: var(--white);
+    color: var(--dark);
 }
 
 /* Navigation Header */
@@ -1239,6 +1281,9 @@ img {
         flex-direction: column;
         gap: 18px;
         margin-bottom: 20px;
+    }
+    .mobile-lang-wrap {
+        display: flex;
     }
     .mobile-cta {
         display: block;
