@@ -657,9 +657,22 @@ img {
 }
 
 .quote-img {
-    max-height: 380px;
-    border-radius: var(--radius-md);
-    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    transition: var(--transition);
+}
+
+.quote-section-alt .quote-img {
+    border: 3px solid var(--gray-border);
+    box-shadow: 0 15px 35px rgba(0, 75, 147, 0.15);
+}
+
+.quote-img:hover {
+    transform: scale(1.03);
 }
 
 .quote-icon {
