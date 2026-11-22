@@ -3,6 +3,81 @@
  * Main JavaScript Interactions & Dynamic Multi-Language Switcher
  */
 
+// Track currently active modal project ID for i18n sync
+let currentModalProjectId = null;
+
+// Global modal functions
+function openVideoModal(projectId) {
+    const videoModal = document.getElementById('videoModal');
+    const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+    const modalPartnerSpan = document.querySelector('#modalPartner .partner-name');
+    const modalQuality = document.getElementById('modalQuality');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalTech = document.getElementById('modalTech');
+
+    if (!videoModal || !modalVideoPlayer || !window.projectData) return;
+
+    const project = window.projectData.find(p => p.id === projectId);
+    if (!project) return;
+
+    currentModalProjectId = projectId;
+    const currentLang = document.documentElement.lang || 'vi';
+    const dict = (window.translations && window.translations[currentLang]) ? window.translations[currentLang] : (window.translations ? window.translations['vi'] : {});
+
+    // Set video player properties
+    modalVideoPlayer.pause();
+    modalVideoPlayer.src = project.file;
+    modalVideoPlayer.poster = project.thumb;
+    modalVideoPlayer.load();
+
+    // Update modal meta info
+    if (modalPartnerSpan) modalPartnerSpan.textContent = project.partner;
+    if (modalQuality) modalQuality.textContent = project.quality;
+    if (modalTitle) modalTitle.innerHTML = dict[project.id + '_t'] || '';
+    if (modalDesc) modalDesc.innerHTML = dict[project.id + '_d'] || '';
+
+    // Render tech tags
+    if (modalTech) {
+        modalTech.innerHTML = project.tech.map(t => `<span class="vcard-tech-tag">${t}</span>`).join('');
+    }
+
+    // Open dialog
+    videoModal.classList.add('active');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Attempt autoplay
+    const playPromise = modalVideoPlayer.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(err => {
+            console.log('Video autoplay waiting for user interaction:', err);
+        });
+    }
+}
+
+function closeVideoModal() {
+    const videoModal = document.getElementById('videoModal');
+    const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+
+    if (!videoModal) return;
+
+    videoModal.classList.remove('active');
+    videoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    if (modalVideoPlayer) {
+        modalVideoPlayer.pause();
+        modalVideoPlayer.removeAttribute('src');
+        modalVideoPlayer.load();
+    }
+    currentModalProjectId = null;
+}
+
+// Expose modal handlers to global window
+window.openVideoModal = openVideoModal;
+window.closeVideoModal = closeVideoModal;
+
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 1. Dynamic Multi-Language Switcher (i18n)
@@ -11,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileLangSelect = document.getElementById('mobileLangSelect');
 
     function setLanguage(lang) {
-        if (!translations || !translations[lang]) {
+        if (!window.translations || !window.translations[lang]) {
             lang = 'vi'; // Fallback to Vietnamese
         }
 
-        const dict = translations[lang];
+        const dict = window.translations[lang];
 
         // Update document language attribute
         document.documentElement.lang = lang;
@@ -24,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (dict[key] !== undefined) {
-                // If it's an option or input element
                 if (el.tagName === 'OPTION') {
                     el.textContent = dict[key];
                 } else {
@@ -45,7 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (langSelect) langSelect.value = lang;
         if (mobileLangSelect) mobileLangSelect.value = lang;
 
-        // 4. Persist user selection
+        // 4. Update open modal if currently displayed
+        if (currentModalProjectId && window.projectData) {
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            if (modalTitle && dict[currentModalProjectId + '_t']) {
+                modalTitle.innerHTML = dict[currentModalProjectId + '_t'];
+            }
+            if (modalDesc && dict[currentModalProjectId + '_d']) {
+                modalDesc.innerHTML = dict[currentModalProjectId + '_d'];
+            }
+        }
+
+        // 5. Persist user selection
         try {
             localStorage.setItem('bkfasi_selected_lang', lang);
         } catch (e) {
@@ -57,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLang = 'vi';
     try {
         const saved = localStorage.getItem('bkfasi_selected_lang');
-        if (saved && translations[saved]) {
+        if (saved && window.translations && window.translations[saved]) {
             currentLang = saved;
         }
     } catch (e) {}
@@ -150,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sections.forEach(sec => {
             const secHeight = sec.offsetHeight;
-            const secTop = sec.offsetTop - 120;
+            const secTop = sec.offsetTop - 130;
             const secId = sec.getAttribute('id');
             const navLink = document.querySelector(`.nav-link[href*="${secId}"]`);
 
@@ -161,6 +247,51 @@ document.addEventListener('DOMContentLoaded', () => {
                     navLink.classList.remove('active');
                 }
             }
+        });
+    });
+
+    // ==========================================
+    // 6. Video Modal Event Listeners
+    // ==========================================
+    const videoModalClose = document.getElementById('videoModalClose');
+    const videoModalBackdrop = document.getElementById('videoModalBackdrop');
+
+    if (videoModalClose) {
+        videoModalClose.addEventListener('click', closeVideoModal);
+    }
+    if (videoModalBackdrop) {
+        videoModalBackdrop.addEventListener('click', closeVideoModal);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeVideoModal();
+        }
+    });
+
+    // ==========================================
+    // 7. Video Projects Category Filter Tabs
+    // ==========================================
+    const filterButtons = document.querySelectorAll('.pfilter-btn');
+    const projectCards = document.querySelectorAll('.video-project-card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+
+            // Active button highlight
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter cards
+            projectCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filter === 'all' || category === filter) {
+                    card.classList.remove('pcard-hidden');
+                } else {
+                    card.classList.add('pcard-hidden');
+                }
+            });
         });
     });
 });

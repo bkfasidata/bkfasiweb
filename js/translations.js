@@ -3,20 +3,202 @@
  * Supported languages: Vietnamese (vi), English (en), Chinese (zh), Japanese (ja), Korean (ko)
  */
 
+const projectData = [
+    {
+        id: "prj_01",
+        file: "videos/prj_01_phone_scara_tray.mp4",
+        thumb: "images/video_thumbs/prj_01_phone_scara_tray.jpg",
+        category: "electronics",
+        partner: "Dreamtech / Smartphone Supply Chain",
+        duration: "02:07",
+        quality: "HD 720p",
+        tech: ["Dobot SCARA", "Tray Feeder", "Auto Press"]
+    },
+    {
+        id: "prj_02",
+        file: "videos/prj_02_phone_conveyor_assembly.mp4",
+        thumb: "images/video_thumbs/prj_02_phone_conveyor_assembly.jpg",
+        category: "electronics",
+        partner: "Dreamtech Factory",
+        duration: "02:35",
+        quality: "HD 720p",
+        tech: ["Smart Conveyor", "Human-Robot Sync", "Assembly Line"]
+    },
+    {
+        id: "prj_03",
+        file: "videos/prj_03_robot_testing_center.mp4",
+        thumb: "images/video_thumbs/prj_03_robot_testing_center.jpg",
+        category: "rnd",
+        partner: "BKFASI R&D & Testing Center",
+        duration: "03:42",
+        quality: "FHD 720p",
+        tech: ["Dobot MG400", "Multi-Robot Auto-Run", "Calibration"]
+    },
+    {
+        id: "prj_04",
+        file: "videos/prj_04_cnc_machine_tending.mp4",
+        thumb: "images/video_thumbs/prj_04_cnc_machine_tending.jpg",
+        category: "cnc",
+        partner: "Precision CNC Center",
+        duration: "00:45",
+        quality: "HD 720p",
+        tech: ["Cobot 6-Axis", "CNC Smart T640", "Hydraulic Clamping"]
+    },
+    {
+        id: "prj_05",
+        file: "videos/prj_05_doosan_press_feeding.mp4",
+        thumb: "images/video_thumbs/prj_05_doosan_press_feeding.jpg",
+        category: "cnc",
+        partner: "Z129 Defense Mechanical Plant",
+        duration: "01:02",
+        quality: "FHD 720p",
+        tech: ["DOOSAN Cobot", "Metal Stamping", "Safety Barrier"]
+    },
+    {
+        id: "prj_06",
+        file: "videos/prj_06_tray_sorting_robot.mp4",
+        thumb: "images/video_thumbs/prj_06_tray_sorting_robot.jpg",
+        category: "electronics",
+        partner: "Electronic Component Assembly",
+        duration: "01:13",
+        quality: "FHD 720p",
+        tech: ["Blister Tray", "High-Speed Pick", "Testing Jig"]
+    },
+    {
+        id: "prj_07",
+        file: "videos/prj_07_rangdong_step_robot_1.mp4",
+        thumb: "images/video_thumbs/prj_07_rangdong_step_robot_1.jpg",
+        category: "consumer",
+        partner: "Rang Dong Light Source & Flask JSC",
+        duration: "00:53",
+        quality: "HD 720p",
+        tech: ["STEP 6-Axis", "Vacuum Flask", "Mirror Plating"]
+    },
+    {
+        id: "prj_08",
+        file: "videos/prj_08_micro_pick_and_place.mp4",
+        thumb: "images/video_thumbs/prj_08_micro_pick_and_place.jpg",
+        category: "electronics",
+        partner: "SMT & Micro-sensor Array Line",
+        duration: "02:10",
+        quality: "HD 720p",
+        tech: ["Micro Pick & Place", "Vacuum Nozzle", "Matrix Tray"]
+    },
+    {
+        id: "prj_09",
+        file: "videos/prj_09_dual_station_inspection.mp4",
+        thumb: "images/video_thumbs/prj_09_dual_station_inspection.jpg",
+        category: "electronics",
+        partner: "Mobile Accessories Plant",
+        duration: "02:10",
+        quality: "FHD 720p",
+        tech: ["Dual Station", "OK/NG Sort", "Functional Test"]
+    },
+    {
+        id: "prj_10",
+        file: "videos/prj_10_seyi_press_z129.mp4",
+        thumb: "images/video_thumbs/prj_10_seyi_press_z129.jpg",
+        category: "cnc",
+        partner: "Z129 Defense Plant - 40 Cobot Stations",
+        duration: "01:03",
+        quality: "FHD 720p",
+        tech: ["SEYI SN1-45/60", "Billet Feeding", "Zero Accidents"]
+    },
+    {
+        id: "prj_11",
+        file: "videos/prj_11_press_gripper_detail.mp4",
+        thumb: "images/video_thumbs/prj_11_press_gripper_detail.jpg",
+        category: "cnc",
+        partner: "Precision Stamping Tooling",
+        duration: "01:05",
+        quality: "FHD 720p",
+        tech: ["Pneumatic Gripper", "Precision Die", "High Temperature"]
+    },
+    {
+        id: "prj_12",
+        file: "videos/prj_12_rangdong_drying_furnace.mp4",
+        thumb: "images/video_thumbs/prj_12_rangdong_drying_furnace.jpg",
+        category: "consumer",
+        partner: "Rang Dong Vacuum Flask JSC",
+        duration: "01:16",
+        quality: "HD 720p",
+        tech: ["STEP Robot", "Plating Furnace", "Thermal Resistant"]
+    },
+    {
+        id: "prj_13",
+        file: "videos/prj_13_dryice_cleaning_robot.mp4",
+        thumb: "images/video_thumbs/prj_13_dryice_cleaning_robot.jpg",
+        category: "electronics",
+        partner: "Smartphone Glass & Housing Facility",
+        duration: "00:38",
+        quality: "FHD 720p",
+        tech: ["DryIce Cleaning", "CO2 Blasting", "Surface Treatment"]
+    },
+    {
+        id: "prj_14",
+        file: "videos/prj_14_dreamtech_camera_test.mp4",
+        thumb: "images/video_thumbs/prj_14_dreamtech_camera_test.jpg",
+        category: "electronics",
+        partner: "Dreamtech Vietnam (Samsung Supplier)",
+        duration: "01:22",
+        quality: "FHD 720p",
+        tech: ["Dreamtech Vietnam", "Camera Inspection", "Smart Conveyor"]
+    },
+    {
+        id: "prj_15",
+        file: "videos/prj_15_glass_pressing_robot.mp4",
+        thumb: "images/video_thumbs/prj_15_glass_pressing_robot.jpg",
+        category: "electronics",
+        partner: "Display & Touch Panel Plant",
+        duration: "00:54",
+        quality: "FHD 720p",
+        tech: ["Screen Glass Press", "Pressure Sensor", "Bubble Detection"]
+    },
+    {
+        id: "prj_16",
+        file: "videos/prj_16_jack_sewing_cobot.mp4",
+        thumb: "images/video_thumbs/prj_16_jack_sewing_cobot.jpg",
+        category: "textile",
+        partner: "Smart Apparel & Footwear Factory",
+        duration: "00:53",
+        quality: "HD 720p",
+        tech: ["JACK CNC Sewing", "Fabric Gripper", "Garment Cobot"]
+    },
+    {
+        id: "prj_17",
+        file: "videos/prj_17_juki_sewing_line.mp4",
+        thumb: "images/video_thumbs/prj_17_juki_sewing_line.jpg",
+        category: "textile",
+        partner: "High-End Garment Export Factory",
+        duration: "01:50",
+        quality: "FHD 720p",
+        tech: ["JUKI Sewing Machine", "Robotic Guide", "+150% Productivity"]
+    },
+    {
+        id: "prj_18",
+        file: "videos/prj_18_juki_multiaxis_suction.mp4",
+        thumb: "images/video_thumbs/prj_18_juki_multiaxis_suction.jpg",
+        category: "textile",
+        partner: "Intelligent Textile Automation Center",
+        duration: "02:40",
+        quality: "HD 720p",
+        tech: ["Multi-Suction Cup", "Flexible Fabric", "JUKI MAYS01"]
+    }
+];
+
 const translations = {
     vi: {
-        // Topbar & Nav
         "hotline": "Hotline: <strong>091 584 1887</strong>",
         "address_top": "65/11/1295 Đường Giải Phóng, P. Hoàng Mai, Hà Nội",
         "nav_home": "Trang Chủ",
         "nav_about": "Về Chúng Tôi",
         "nav_solutions": "Giải Pháp",
+        "nav_projects": "Dự Án Thực Tế",
         "nav_industries": "Ngành Công Nghiệp",
         "nav_testimonials": "Cảm Nhận",
         "nav_contact": "Liên Hệ",
         "btn_consult": "Tư Vấn Kỹ Thuật",
 
-        // Hero
         "hero_badge": "FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_title": "BKFASI – CÔNG TY CỔ PHẦN TÍCH HỢP TỰ ĐỘNG HÓA BÁCH KHOA",
         "hero_desc": "Đơn vị tích hợp hệ thống tự động hóa công nghiệp toàn diện, cung cấp các giải pháp trọn gói cho các nhà máy sản xuất trên toàn quốc. Chúng tôi chuyên thiết kế và triển khai các hệ thống dựa trên bộ điều khiển lập trình (PLC), hệ thống thông tin sản xuất (MES), điều khiển chuyển động (motion control) và robot công nghiệp.",
@@ -27,11 +209,10 @@ const translations = {
         "btn_explore": "Khám Phá Giải Pháp",
         "btn_partner": "Liên Hệ Hợp Tác",
 
-        // About
         "about_tag": "GIỚI THIỆU",
         "about_title": "Đối Tác Tự Động Hóa Toàn Diện Cho Nhà Máy Của Bạn",
-        "about_lead": "<strong>BKFASI (Bách Khoa Factory Automation Systems Integrator)</strong> là đơn vị tiên phong trong lĩnh vực tích hợp hệ thống tự động hóa công nghiệp và chế tạo máy thông minh tại Việt Nam.",
-        "about_p": "Chúng tôi tập trung vào việc nghiên cứu, phát triển và ứng dụng công nghệ điều khiển chuyển động tiên tiến, robot tự động hóa trong sản xuất lẫn các dòng robot phục vụ đời sống: robot bán hàng, robot pha chế cà phê, robot pha trà, robot làm kem.",
+        "about_lead": "<strong>BKFASI (Bách Khoa Factory Automation Systems Integrator)</strong> là đơn vị tiên phong trong lĩnh vực tích hợp hệ thống tự động hóa công nghiệp và chế tạo máy thông minh tại Việt Nam, tiền thân là Trung tâm Nghiên cứu Cơ khí Chính xác (RPMEC) thành lập năm 1985 thuộc Đại học Bách Khoa Hà Nội.",
+        "about_p": "Chúng tôi tập trung vào việc nghiên cứu, phát triển và ứng dụng công nghệ điều khiển chuyển động tiên tiến, robot tự động hóa trong sản xuất (VinFast, Rạng Đông, Z129, Dreamtech) lẫn các dòng robot phục vụ đời sống: robot bán hàng, robot pha chế cà phê, robot pha trà, robot làm kem.",
         "stat1_lbl": "Tiêu chuẩn quốc tế NEC, NFPA",
         "stat2_lbl": "Hỗ trợ kỹ thuật chuyên sâu",
         "stat3_num": "TOÀN QUỐC",
@@ -42,7 +223,6 @@ const translations = {
         "check2": "Làm chủ công nghệ phần mềm & phần cứng",
         "check3": "Tư vấn & khảo sát tận nơi cho nhà máy",
 
-        // Solutions
         "sol_tag": "NĂNG LỰC CỐT LÕI",
         "sol_title": "Giải Pháp Tự Động Hóa",
         "sol_desc": "Thiết kế, tích hợp và triển khai hệ thống toàn diện theo tiêu chuẩn an toàn công nghiệp khắt khe nhất.",
@@ -69,6 +249,59 @@ const translations = {
         "robot_f1": "Robot công nghiệp & Robot cộng tác (Cobot)",
         "robot_f2": "Robot F&B tự động (cà phê, trà, kem)",
         "robot_f3": "Tích hợp thị giác máy tính (Machine Vision)",
+
+        // Project Video Showcase
+        "prj_tag": "HỒ SƠ NĂNG LỰC THỰC CHIẾN",
+        "prj_title": "Video Dự Án Thực Tế Đã Triển Khai",
+        "prj_desc": "Tổng hợp các dự án tự động hóa, robot công nghiệp và dây chuyền chế tạo thông minh do BKFASI trực tiếp thiết kế, chế tạo và chuyển giao tại các nhà máy trên toàn quốc.",
+        "tab_all": "Tất Cả Dự Án",
+        "tab_electronics": "Linh Kiện Điện Tử & Bán Dẫn",
+        "tab_cnc": "Dập & Gia Công Cơ Khí CNC",
+        "tab_textile": "Tự Động Hóa Dệt May",
+        "tab_consumer": "Hàng Tiêu Dùng & Thủy Tinh",
+        "tab_rnd": "Nghiên Cứu & Kiểm Định",
+        "btn_watch_video": "Xem Video Chi Tiết",
+        "modal_partner_lbl": "Đối tác / Nhà máy:",
+        "modal_category_lbl": "Phân loại:",
+        "modal_close": "Đóng",
+
+        // Project Titles & Descs (vi)
+        "prj_01_t": "Robot SCARA Cấp Phôi Khay Tự Động - Dây Chuyền Lắp Ráp Vỏ Điện Thoại",
+        "prj_01_d": "Tay robot SCARA MG400 gắp chính xác phôi vỏ điện thoại từ khay xếp tầng đưa vào trạm ép kiểm định với cảm biến quang và đèn tháp trạng thái an toàn.",
+        "prj_02_t": "Dây Chuyền Băng Tải Lắp Ráp Khung Vỏ Điện Thoại Thông Minh",
+        "prj_02_d": "Hệ thống tích hợp băng chuyền tự động phân luồng và tay robot bốc dỡ linh kiện đồng bộ với công nhân thao tác, tối ưu chu kỳ lắp ráp sản phẩm.",
+        "prj_03_t": "Trung Tâm Kiểm Thử & Hiệu Chuẩn Tự Động Hàng Loạt Robot Dobot MG400",
+        "prj_03_d": "Trạm kiểm thử độ chính xác lặp lại, giám sát trạng thái vận hành tự động (Auto-run) đa robot đồng thời, kết nối phần mềm Robot Control Program phân tích lỗi real-time.",
+        "prj_04_t": "Robot Cobot Cấp Phôi Tự Động Cho Trung Tâm Phay CNC Smart T640",
+        "prj_04_d": "Cobot 6 bậc tự do tự động mở cửa buồng máy CNC Smart T640 (HANS), gắp chi tiết phôi tròn từ bàn chờ nạp vào đồ gá thủy lực, vận hành 24/7 không người trực.",
+        "prj_05_t": "Cobot DOOSAN Cấp Phôi Tự Động Cho Máy Dập Kim Loại Công Nghiệp",
+        "prj_05_d": "Cánh tay robot cộng tác Doosan nạp phôi tấm vào lòng cối máy dập kim loại, tích hợp hàng rào an toàn quang điện và nút dừng khẩn cấp.",
+        "prj_06_t": "Robot Bốc Xếp Khay Vỉ Linh Kiện Điện Tử Đa Tầng",
+        "prj_06_d": "Robot tự động lấy linh kiện từ khay nhựa nhiều tầng chuyển vào trạm đo lường thông số, tự động chuyển khay rỗng sang vị trí thu hồi.",
+        "prj_07_t": "Robot STEP 6 Trục Bốc Xếp Ruột Phích Thủy Tinh Rạng Đông",
+        "prj_07_d": "Robot công nghiệp STEP tải trọng lớn gắp chính xác phôi ruột phích thủy tinh chịu nhiệt từ băng tải cấp liệu đưa vào dây chuyền mạ tráng gương tự động.",
+        "prj_08_t": "Robot Pick & Place Tốc Độ Cao Cho Cụm Phím & Cảm Biến Điện Tử",
+        "prj_08_d": "Tay robot trang bị đầu hút chân không siêu chính xác gắp linh kiện siêu nhỏ từ khay ma trận đặt vào đồ gá hàn mạch với chu kỳ dưới 0.8 giây/sản phẩm.",
+        "prj_09_t": "Hệ Thống Robot Cấp Phôi Cho Cụm Máy Kiểm Tra Chức Năng Kép",
+        "prj_09_d": "Một robot điều phối trung tâm phục vụ luân phiên 2 trạm kiểm tra chức năng (Functional Test) tự động, phân loại sản phẩm đạt chuẩn OK / NG tự động.",
+        "prj_10_t": "Trạm Robot Cobot Cấp Phôi Máy Dập SEYI - Nhà Máy Z129",
+        "prj_10_d": "Toàn cảnh trạm robot cộng tác nạp phôi dập cho hệ thống máy dập công suất cao SEYI (SN1-45 / SN1-60), giải phóng sức lao động và loại bỏ nguy cơ tai nạn dập tay.",
+        "prj_11_t": "Cận Cảnh Tay Kẹp Robot Định Vị Phôi Kim Loại Vào Cối Dập",
+        "prj_11_d": "Cận cảnh cơ cấu chấp hành tay kẹp khí nén chịu lực của robot định vị phôi chính xác từng milimet vào khuôn dập nhiệt độ cao với hành trình êm ái.",
+        "prj_12_t": "Dây Chuyền Robot Gắp Ruột Phích Sau Lò Sấy Mạ - Rạng Đông",
+        "prj_12_d": "Cánh tay robot STEP gắp hàng loạt ruột phích mạ bạc sáng bóng từ lò sấy nhiệt sau mạ chuyển sang giàn làm mát tuần hoàn, hoạt động bền bỉ trong môi trường nhiệt độ cao.",
+        "prj_13_t": "Cell Robot Làm Sạch Bề Mặt Linh Kiện Bằng Đá Khô (DryIce Automation)",
+        "prj_13_d": "Robot điều khiển đầu phun đá khô CO2 tự động làm sạch bụi bẩn vi mô trên nắp lưng điện thoại mà không làm xước bề mặt kính hay để lại cặn hóa chất.",
+        "prj_14_t": "Dây Chuyền Tự Động Hóa Dreamtech - Robot Cấp Phôi & Test Camera",
+        "prj_14_d": "Dây chuyền sản xuất tự động khép kín với các module robot kết hợp băng chuyền kiểm tra cụm camera đa ống kính trên thân điện thoại thông minh.",
+        "prj_15_t": "Trạm Robot Tự Động Ép & Kiểm Tra Kính Bảo Vệ Màn Hình",
+        "prj_15_d": "Tay robot lấy kính bảo vệ đưa vào máy ép áp lực chuẩn, kiểm soát lực ép bằng loadcell và cảm biến quang phát hiện bọt khí tự động.",
+        "prj_16_t": "Cobot Nạp Phôi Vải Tự Động Cho Máy May Lập Trình JACK",
+        "prj_16_d": "Robot cộng tác trang bị đồ gá kẹp khung vải khổ lớn, tự động nạp bán thành phẩm vào máy may lập trình CNC JACK và thu hồi thành phẩm sau khi may.",
+        "prj_17_t": "Tự Động Hóa Dây Chuyền May JUKI Bằng Cánh Tay Robot",
+        "prj_17_d": "Trạm robot thông minh hỗ trợ công nhân may công nghiệp: tự động trải vải, giữ nếp và dẫn hướng vật liệu vào bàn may JUKI, tăng năng suất gấp 2.5 lần.",
+        "prj_18_t": "Robot Giác Hút Chân Không Đa Điểm Nạp Vải Cho Máy May JUKI",
+        "prj_18_d": "Cánh tay robot cánh tay dài với bàn kẹp giác hút chân không đa điểm chuyên dụng cho vật liệu mềm (vải, da), nạp chính xác vào trạm may JUKI MAYS01.",
 
         // Quotes
         "quote1_text": "“Chiến lược phát triển của chúng tôi là xây dựng mối quan hệ lâu dài với khách hàng thông qua việc cung cấp thiết kế vượt trội, triển khai hiệu quả và hỗ trợ tận tâm cho các hệ thống điều khiển tự động hóa, giải pháp thông tin sản xuất và hệ thống robot.”",
@@ -151,24 +384,24 @@ const translations = {
         // Footer
         "f_brand_desc": "<strong>BKFASI – CÔNG TY CỔ PHẦN TÍCH HỢP TỰ ĐỘNG HÓA BÁCH KHOA</strong><br>Factory Automation Systems Intergrator. Tiên phong giải pháp tự động hóa công nghiệp và robot tại Việt Nam.",
         "f_solutions": "Giải Pháp",
+        "f_projects": "Dự Án Nổi Bật",
         "f_industries": "Ngành Công Nghiệp",
         "f_contact": "Thông Tin Liên Hệ",
         "f_rights": "Bản quyền từ 2022 - 2025 thuộc về bkfasi.com. All rights reserved."
     },
 
     en: {
-        // Topbar & Nav
         "hotline": "Hotline: <strong>+84 91 584 1887</strong>",
         "address_top": "65/11/1295 Giai Phong Street, Hoang Mai, Hanoi, Vietnam",
         "nav_home": "Home",
         "nav_about": "About Us",
         "nav_solutions": "Solutions",
+        "nav_projects": "Projects",
         "nav_industries": "Industries",
         "nav_testimonials": "Testimonials",
         "nav_contact": "Contact",
         "btn_consult": "Technical Inquiry",
 
-        // Hero
         "hero_badge": "FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_title": "BKFASI – BACH KHOA FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_desc": "A comprehensive industrial automation system integrator providing turnkey engineering solutions for manufacturing plants nationwide. We specialize in programmable logic controllers (PLC), manufacturing execution systems (MES), motion control, and industrial robotics.",
@@ -179,11 +412,10 @@ const translations = {
         "btn_explore": "Explore Solutions",
         "btn_partner": "Get In Touch",
 
-        // About
         "about_tag": "ABOUT US",
         "about_title": "Your Trusted Factory Automation Engineering Partner",
-        "about_lead": "<strong>BKFASI</strong> is a leading system integrator in industrial automation and intelligent machinery in Vietnam.",
-        "about_p": "We focus on research, development, and application of advanced motion control technology, manufacturing robotics, as well as smart commercial service robots: retail robots, coffee brewing robots, tea making robots, and ice cream robots.",
+        "about_lead": "<strong>BKFASI</strong> is a leading system integrator in industrial automation and intelligent machinery in Vietnam, originating from the Precision Mechanical Engineering Research Center (RPMEC) founded in 1985 at Hanoi University of Science and Technology.",
+        "about_p": "We focus on R&D and implementation of advanced motion control and robotics across heavy industry (VinFast, Rang Dong, Z129, Dreamtech) as well as commercial service robots: retail, automated coffee, tea, and ice cream robots.",
         "stat1_lbl": "International Standards NEC, NFPA",
         "stat2_lbl": "24/7 Dedicated Technical Support",
         "stat3_num": "NATIONWIDE",
@@ -194,7 +426,6 @@ const translations = {
         "check2": "Complete Mastery of Hardware & Software",
         "check3": "On-site Factory Survey & Consultation",
 
-        // Solutions
         "sol_tag": "CORE CAPABILITIES",
         "sol_title": "Automation Solutions",
         "sol_desc": "Design, integrate, and deploy comprehensive systems complying with the most rigorous industrial safety standards.",
@@ -222,7 +453,58 @@ const translations = {
         "robot_f2": "Commercial F&B Automated Robots",
         "robot_f3": "Integrated Machine Vision Systems",
 
-        // Quotes
+        // Project Video Showcase (en)
+        "prj_tag": "FIELD-PROVEN CAPABILITIES",
+        "prj_title": "Live Project Execution Videos",
+        "prj_desc": "Explore real-world industrial automation, robotics, and intelligent manufacturing lines deployed by BKFASI for leading manufacturing plants nationwide.",
+        "tab_all": "All Projects",
+        "tab_electronics": "Electronics & Semiconductors",
+        "tab_cnc": "Stamping & CNC Machining",
+        "tab_textile": "Textile & Garment Automation",
+        "tab_consumer": "Consumer Goods & Glassware",
+        "tab_rnd": "R&D & Testing Center",
+        "btn_watch_video": "Watch Video",
+        "modal_partner_lbl": "Client / Plant:",
+        "modal_category_lbl": "Category:",
+        "modal_close": "Close",
+
+        "prj_01_t": "SCARA Robot Automatic Tray Feeding - Smartphone Housing Line",
+        "prj_01_d": "High-precision Dobot SCARA MG400 picking smartphone chassis from multi-tier trays into the inspection press with optical sensors and status light tower.",
+        "prj_02_t": "Smart Conveyor Assembly Line for Smartphone Chassis",
+        "prj_02_d": "Automated diverter conveyor integrated with robotic arm synchronized with manual assembly operators for optimized production cycle.",
+        "prj_03_t": "Automated Batch Testing & Calibration Center for Dobot MG400",
+        "prj_03_d": "Multi-robot auto-run testing station evaluating repeatability, running continuous 24/7 validation linked to real-time Robot Control Program.",
+        "prj_04_t": "Cobot Machine Tending for Hi-Speed CNC Tapping Center",
+        "prj_04_d": "6-axis collaborative robot tending Smart T640 CNC center (HANS), loading billets into hydraulic fixtures for unmanned 24/7 operation.",
+        "prj_05_t": "DOOSAN Cobot Automatic Billet Feeding for Metal Stamping Press",
+        "prj_05_d": "Industrial collaborative robot feeding sheet billets into stamping die with photoelectric safety light curtains and emergency stop interlocks.",
+        "prj_06_t": "Blister Tray Handling & Sorting Robot for Electronics",
+        "prj_06_d": "Automated robot retrieving components from multi-tier blister trays into test station and ejecting empty trays automatically.",
+        "prj_07_t": "STEP 6-Axis Industrial Robot Transferring Glass Liners - Rang Dong",
+        "prj_07_d": "Heavy-duty STEP 6-axis articulated robot transferring vacuum flask glass liners from infeed conveyor into automated mirror silver plating line.",
+        "prj_08_t": "High-Speed Micro Pick & Place Robot for Sensor Arrays",
+        "prj_08_d": "Precision vacuum gripper picking micro sensor chips from matrix trays onto soldering jigs at sub-0.8s cycle speed.",
+        "prj_09_t": "Dual-Station Robot Feeder for Automated Quality Inspection",
+        "prj_09_d": "Central coordinated robot feeding dual functional test stations alternately, automatically sorting OK/NG parts.",
+        "prj_10_t": "SEYI Press Automatic Billet Feeding Cobot Station - Z129 Plant",
+        "prj_10_d": "Overview of cobot feeding station on high-tonnage SEYI stamping press line (SN1-45/60), eliminating hazardous manual feeding risks.",
+        "prj_11_t": "Close-up Precision Gripper Positioning Billet into Press Die",
+        "prj_11_d": "Close-up view of heavy-duty pneumatic gripper smoothly positioning metal billets into high-temperature stamping dies with sub-millimeter precision.",
+        "prj_12_t": "Robot Transferring Flask Liners from Plating Drying Furnace - Rang Dong",
+        "prj_12_d": "STEP robot extracting hot silver-plated vacuum flask liners from post-plating drying oven into circulating cooling conveyor.",
+        "prj_13_t": "DryIce Surface Cleaning & Blasting Automation Robot Cell",
+        "prj_13_d": "Robot-guided supersonic CO2 dry ice nozzle removing microscopic contaminants from smartphone glass housing with zero residue.",
+        "prj_14_t": "Dreamtech Factory Automation - Camera & Housing Testing Line",
+        "prj_14_d": "Enclosed automated cell with integrated robotic modules inspecting multi-lens smartphone camera modules on continuous conveyor.",
+        "prj_15_t": "Automated Screen & Protective Glass Pressing & Inspection Station",
+        "prj_15_d": "Robotic arm loading protective glass into calibrated pressing jig with closed-loop force control and optical bubble inspection.",
+        "prj_16_t": "Collaborative Robot Feeding Fabric to JACK Industrial Sewing Machine",
+        "prj_16_d": "Cobot with large fabric clamp feeding semi-finished textile parts into JACK CNC pattern sewing machine and unloading finished goods.",
+        "prj_17_t": "JUKI Industrial Sewing Line Automation Powered by Robotic Arm",
+        "prj_17_d": "Intelligent robot assisting apparel operators by smoothing, aligning, and guiding fabric into JUKI sewing head, boosting output by 2.5x.",
+        "prj_18_t": "Multi-Suction Cup Robotic Arm for Automated Garment Feeding - JUKI",
+        "prj_18_d": "Long-reach robotic arm equipped with multi-point vacuum matrix gripper handling flexible fabrics into JUKI MAYS01 automated sewing unit.",
+
         "quote1_text": "“Our development strategy is to build long-term relationships with customers through superior design, efficient implementation, and dedicated support for automation control systems, manufacturing information solutions, and robotics.”",
         "quote1_author": "Nguyen Chi Hung",
         "quote1_role": "Co-Founder - Co-CEO - Chief Technology Officer (CTO)",
@@ -231,7 +513,6 @@ const translations = {
         "quote2_author": "Shim In Bo",
         "quote2_role": "Co-Founder - Co-CEO - Chief Financial Officer (CFO)",
 
-        // Industries
         "ind_tag": "PRACTICAL APPLICATIONS",
         "ind_title": "Target Industries",
         "ind_desc": "BKFASI delivers tailored engineering solutions meeting demanding standards across various manufacturing sectors.",
@@ -252,27 +533,25 @@ const translations = {
         "ind_gen_t": "General Industry",
         "ind_gen_d": "Customized and adaptable automation solutions designed for unique manufacturing requirements.",
 
-        // Testimonials
         "testi_tag": "PARTNER TESTIMONIALS",
         "testi_title": "Client Reviews",
         "testi_desc": "Customer trust and satisfaction are the highest benchmark of value for BKFASI solutions.",
-        "t1_text": "“We collaborated with BKFASI on an assembly line automation upgrade. I was thoroughly impressed by their highly skilled engineering team, professionalism, and dedicated support. Their PLC solutions significantly improved our productivity and streamlined our production process.”",
+        "t1_text": "“We collaborated with BKFASI on an assembly line automation upgrade. I was thoroughly impressed by their highly skilled engineering team, professionalism, and dedicated support. Their PLC solutions significantly improved our productivity.”",
         "t1_name": "Nguyen Minh Quan",
         "t1_role": "Technical Director – Minh Quang Mechanical Co., Ltd.",
-        "t2_text": "“The products and services from BKFASI truly exceeded our expectations. The motion control system they integrated for our packaging line runs smoothly and accurately, saving us substantial labor costs. They are a partner we fully trust.”",
+        "t2_text": "“The products and services from BKFASI truly exceeded our expectations. The motion control system they integrated for our packaging line runs smoothly and accurately, saving us substantial labor costs.”",
         "t2_name": "Tran Thi Bich Ngoc",
         "t2_role": "Production Manager – An Viet Pharmaceutical JSC",
-        "t3_text": "“BKFASI is one of the few system integrators in Vietnam capable of deploying MES solutions thoroughly and effectively. Their manufacturing information system allows real-time operational monitoring, substantially elevating our plant governance.”",
+        "t3_text": "“BKFASI is one of the few system integrators in Vietnam capable of deploying MES solutions thoroughly and effectively. Their manufacturing information system allows real-time operational monitoring.”",
         "t3_name": "Le Van Hung",
         "t3_role": "Chief Executive Officer – Phu An Plastics Factory",
-        "t4_text": "“I highly value BKFASI's consultation and execution capabilities. From industrial robots to control systems, everything was meticulously calculated and functions seamlessly. They provide a comprehensive automation ecosystem.”",
+        "t4_text": "“I highly value BKFASI's consultation and execution capabilities. From industrial robots to control systems, everything was meticulously calculated and functions seamlessly.”",
         "t4_name": "Pham Thi Thu Ha",
         "t4_role": "Maintenance Manager – Anh Duong Food Co., Ltd.",
-        "t5_text": "“Working with BKFASI has been a genuinely positive experience. They accompanied us from initial surveying through final commissioning. Their systematic thinking and disciplined project execution ensured top-notch quality on schedule.”",
+        "t5_text": "“Working with BKFASI has been a genuinely positive experience. They accompanied us from initial surveying through final commissioning, ensuring top-notch quality on schedule.”",
         "t5_name": "Dinh Quoc Bao",
         "t5_role": "Project Manager – Tan Thanh M&E Co., Ltd.",
 
-        // Contact
         "contact_tag": "CONNECT WITH BKFASI",
         "contact_title": "Contact Us & Engineering Consultation",
         "contact_desc": "For inquiries regarding PLC, Motion Control, MES, or automated Robotic systems, please get in touch with our team:",
@@ -300,27 +579,26 @@ const translations = {
         "btn_submit": "Submit Inquiry to BKFASI",
         "alert_success": "Thank you! BKFASI has received your inquiry and will contact you promptly.",
 
-        // Footer
         "f_brand_desc": "<strong>BKFASI – BACH KHOA FACTORY AUTOMATION SYSTEMS INTEGRATOR</strong><br>Pioneering industrial automation engineering and robotic solutions across Vietnam.",
         "f_solutions": "Solutions",
+        "f_projects": "Notable Projects",
         "f_industries": "Target Industries",
         "f_contact": "Contact Info",
         "f_rights": "Copyright 2022 - 2025 by bkfasi.com. All rights reserved."
     },
 
     zh: {
-        // Topbar & Nav
         "hotline": "服务热线: <strong>+84 91 584 1887</strong>",
         "address_top": "越南河内市黄梅坊解放路65/11/1295号",
         "nav_home": "首页",
         "nav_about": "关于我们",
         "nav_solutions": "解决方案",
+        "nav_projects": "工程案例",
         "nav_industries": "行业应用",
         "nav_testimonials": "客户评价",
         "nav_contact": "联系我们",
         "btn_consult": "技术咨询",
 
-        // Hero
         "hero_badge": "FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_title": "BKFASI – 百科工厂自动化系统集成股份公司",
         "hero_desc": "全面的工业自动化系统集成商，为全国制造工厂提供交钥匙工程解决方案。我们专业设计和实施基于可编程逻辑控制器（PLC）、制造执行系统（MES）、运动控制和工业机器人的自动化系统。",
@@ -331,11 +609,10 @@ const translations = {
         "btn_explore": "探索解决方案",
         "btn_partner": "商务合作",
 
-        // About
         "about_tag": "关于我们",
         "about_title": "您值得信赖的智能工厂自动化合作伙伴",
-        "about_lead": "<strong>BKFASI</strong> 是越南工业自动化系统集成和智能机械制造领域的领军企业。",
-        "about_p": "我们专注于先进运动控制技术、工业生产机器人的研发应用，以及商业服务机器人：无人零售机器人、咖啡制作机器人、调茶机器人和冰淇淋机器人。",
+        "about_lead": "<strong>BKFASI</strong> 是越南工业自动化系统集成和智能机械制造领域的领军企业，前身为1985年成立于河内百科大学的精密机械研究中心（RPMEC）。",
+        "about_p": "我们专注于先进运动控制技术、工业生产机器人的研发应用（VinFast、Rạng Đông、Z129、Dreamtech），以及商业服务机器人：无人零售机器人、咖啡制作机器人、调茶机器人和冰淇淋机器人。",
         "stat1_lbl": "国际安全标准 NEC, NFPA",
         "stat2_lbl": "24/7 资深技术支持",
         "stat3_num": "全国服务",
@@ -346,7 +623,6 @@ const translations = {
         "check2": "全面掌握软硬件自主集成核心技术",
         "check3": "提供工厂现场勘测与专属定制方案",
 
-        // Solutions
         "sol_tag": "核心能力",
         "sol_title": "自动化解决方案",
         "sol_desc": "遵循最严苛的工业安全规范，为企业设计、集成和部署全面的自动化系统。",
@@ -374,7 +650,59 @@ const translations = {
         "robot_f2": "商业餐饮自动化机器人系统",
         "robot_f3": "机器视觉引导定位与缺陷检测",
 
-        // Quotes
+        // Project Video Showcase (zh)
+        "prj_tag": "实战工程业绩",
+        "prj_title": "现场工程实录视频",
+        "prj_desc": "BKFASI 在越南全国各大型制造工厂（VinFast、Rạng Đông、Z129、Dreamtech 等）直接设计、集成并交付的工业自动化与机器人实录。",
+        "tab_all": "全部工程",
+        "tab_electronics": "电子与半导体",
+        "tab_cnc": "冲压与CNC加工",
+        "tab_textile": "纺织服装自动化",
+        "tab_consumer": "消费品与玻璃保温瓶",
+        "tab_rnd": "研发与测试中心",
+        "btn_watch_video": "查看现场视频",
+        "modal_partner_lbl": "合作客户 / 工厂:",
+        "modal_category_lbl": "工程分类:",
+        "modal_close": "关闭",
+
+        "prj_01_t": "SCARA机器人自动供料 - 手机外壳组装流水线",
+        "prj_01_d": "高精度 Dobot SCARA 机器人从多层料盘自动抓取手机外壳工件送入压合检测工位，配备安全光电与状态指示灯。",
+        "prj_02_t": "智能传送带流水线 - 手机机身总装",
+        "prj_02_d": "智能分流传输带系统结合机械手上下料，与人工装配工位精准同步，显著缩减节拍时间。",
+        "prj_03_t": "Dobot MG400 机器人批量自动化测试与校准中心",
+        "prj_03_d": "多台机器人同步Auto-run连续运转测试，连接Robot Control Program实时分析重复定位精度与异常报警。",
+        "prj_04_t": "协作机器人CNC高速加工中心自动上下料",
+        "prj_04_d": "六轴协作机器人自动启闭 Smart T640 (HANS) CNC 舱门，完成圆形金属工件的高精度液压夹具装夹，实现24小时无人化加工。",
+        "prj_05_t": "斗山 (DOOSAN) 协作机器人冲压机自动送料",
+        "prj_05_d": "工业协作机械臂自动将金属板料送入冲床模具，配备光幕安全防护系统与急停联锁装置。",
+        "prj_06_t": "多层吸塑料盘电子零部件自动抓取分拣机器人",
+        "prj_06_d": "机器人从立体托盘中自动拾取电子元器件送入电气测试工位，并自动分离空料盘。",
+        "prj_07_t": "STEP 6轴重型工业机器人搬运玻璃保温瓶胆 - 亮东集团",
+        "prj_07_d": "重载STEP工业机器人从输送线精准夹取耐热玻璃保温瓶内胆，送入全自动镀银流水线。",
+        "prj_08_t": "微型电子传感器及按键高速 Pick & Place 贴装",
+        "prj_08_d": "配备微米级真空吸嘴的机械臂从矩阵托盘高速拾取微型元器件放入焊接治具，节拍达0.8秒以内。",
+        "prj_09_t": "双工位综合功能测试自动上下料机器人单元",
+        "prj_09_d": "一台中央调度机器人交替服务两个自动化测试机柜，并自动完成合格品(OK)与不良品(NG)的分流。",
+        "prj_10_t": "SEYI 冲床自动送料协作机器人工作站 - Z129 军工机械厂",
+        "prj_10_d": "40个协作机器人工作站服务于SEYI重型冲床冲压生产线，彻底解放重体力劳动并杜绝冲压伤手事故。",
+        "prj_11_t": "高精度气动机械爪模具送料特写",
+        "prj_11_d": "耐高温重载气动夹爪将金属胚料毫米级精准置入模具型腔，运行平稳无震颤。",
+        "prj_12_t": "亮东保温瓶镀银烘烤炉出料机械手工作站",
+        "prj_12_d": "STEP 机械臂从高温镀银烘箱连续抓取出炉瓶胆送入循环冷却线，在高温恶劣环境下长效稳定运行。",
+        "prj_13_t": "干冰微粒自动清洗机器人工作站 (DryIce Automation)",
+        "prj_13_d": "机器人引导超音速CO2干冰喷嘴彻底清除手机背盖表面微尘颗粒，无划伤无化学残留。",
+        "prj_14_t": "Dreamtech 智能工厂 - 手机摄像头及外壳检测流水线",
+        "prj_14_d": "封闭式洁净机器人工作站结合流水线检测手机多摄模组与精密结构件。",
+        "prj_15_t": "手机盖板玻璃精密贴合与测压机器人工作站",
+        "prj_15_d": "机械臂精确取放防护玻璃并置入压力治具，压力传感器与视觉系统实时监测气泡缺陷。",
+        "prj_16_t": "协作机器人赋能 JACK 工业数控花样缝纫机自动送料",
+        "prj_16_d": "协作机械臂配备大幅面布料夹具，自动将裁片送入数控缝纫机并在缝纫完成后精准收料。",
+        "prj_17_t": "重机 (JUKI) 工业缝纫生产线机器人自动化改造",
+        "prj_17_d": "智能机器人自动完成面料铺平、导向与进给，协同缝纫女工将整线产能提升2.5倍。",
+        "prj_18_t": "多吸盘真空机械臂柔性织物自动送布系统 - JUKI MAYS01",
+        "prj_18_d": "长臂展机器人搭载多点微孔真空吸盘阵列，精准搬运软性布料送入 JUKI MAYS01 智能缝纫单元。",
+
+        // Quotes & Industries & Testimonials (zh)
         "quote1_text": "“我们的发展战略是通过在自动化控制、制造信息系统和机器人领域提供卓越的设计、高效的交付与贴心的售后，与客户建立长期互信的伙伴关系。”",
         "quote1_author": "阮志兴 (Nguyen Chi Hung)",
         "quote1_role": "联合创始人 · 联合CEO · 首席技术官 (CTO)",
@@ -383,7 +711,6 @@ const translations = {
         "quote2_author": "沈寅宝 (Shim In Bo)",
         "quote2_role": "联合创始人 · 联合CEO · 首席财务官 (CFO)",
 
-        // Industries
         "ind_tag": "行业应用",
         "ind_title": "服务产业领域",
         "ind_desc": "BKFASI 为各制造行业量身定制满足严苛标准的自动化技术解决方案。",
@@ -404,7 +731,6 @@ const translations = {
         "ind_gen_t": "通用工业",
         "ind_gen_d": "针对客户特定工况与非标自动化需求的灵活定制方案。",
 
-        // Testimonials
         "testi_tag": "合作伙伴评价",
         "testi_title": "客户心声",
         "testi_desc": "客户的信任与肯定是检验 BKFASI 工程方案价值的最高标准。",
@@ -424,7 +750,6 @@ const translations = {
         "t5_name": "丁国宝",
         "t5_role": "工程项目总监 – 新城机电工程公司",
 
-        // Contact
         "contact_tag": "联系我们",
         "contact_title": "业务合作与技术咨询",
         "contact_desc": "如需咨询 PLC、运动控制、MES 或智能机器人自动化系统，欢迎随时与我们联系：",
@@ -452,27 +777,26 @@ const translations = {
         "btn_submit": "立即提交咨询请求",
         "alert_success": "非常感谢！BKFASI 已收到您的信息，我们将尽快与您联系。",
 
-        // Footer
         "f_brand_desc": "<strong>BKFASI – 百科工厂自动化系统集成股份公司</strong><br>Factory Automation Systems Intergrator. 越南领先的工业自动化与智能机器人系统集成商。",
         "f_solutions": "解决方案",
+        "f_projects": "重大工程业绩",
         "f_industries": "行业应用",
         "f_contact": "联系方式",
         "f_rights": "版权所有 © 2022 - 2025 bkfasi.com 保留所有权利。"
     },
 
     ja: {
-        // Topbar & Nav
         "hotline": "ホットライン: <strong>+84 91 584 1887</strong>",
         "address_top": "ベトナム・ハノイ市ホアンマイ区ザイフォン通り65/11/1295号",
         "nav_home": "ホーム",
         "nav_about": "会社概要",
         "nav_solutions": "ソリューション",
+        "nav_projects": "導入実績動画",
         "nav_industries": "適用分野",
         "nav_testimonials": "お客様の声",
         "nav_contact": "お問い合わせ",
         "btn_consult": "技術相談・見積依頼",
 
-        // Hero
         "hero_badge": "FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_title": "BKFASI – バクコア・ファクトリーオートメーション総合システム",
         "hero_desc": "全国の製造工場向けに包括的なターンキーエンジニアリングを提供する産業用自動化システムインテグレーター。PLC制御、製造実行システム（MES）、高精度モーションコントロール、産業用ロボットシステムの設計・構築を専門としています。",
@@ -483,11 +807,10 @@ const translations = {
         "btn_explore": "ソリューションを見る",
         "btn_partner": "お問い合わせ",
 
-        // About
         "about_tag": "会社概要",
         "about_title": "工場のスマート自動化を支える信頼のエンジニアリングパートナー",
-        "about_lead": "<strong>BKFASI</strong> は、ベトナムにおける工場自動化システムインテグレーションおよび知能化機械分野のパイオニアです。",
-        "about_p": "最先端のモーションコントロール技術や生産ロボットの研究開発・応用に加え、無人販売ロボット、全自動コーヒードリップロボット、お茶・アイスクリームロボットなど次世代サービスロボットの開発にも注力しています。",
+        "about_lead": "<strong>BKFASI</strong> は、ハノイ工科大学精密機械工学研究センター（RPMEC、1985年設立）をルーツに持つ、ベトナムの工場自動化・知能化機械分野のパイオニアです。",
+        "about_p": "最先端のモーションコントロール技術や生産ロボットの研究開発・応用（VinFast、Rang Dong、Z129、Dreamtech）に加え、無人販売ロボット、全自動コーヒードリップロボット、お茶・アイスクリームロボットなど次世代サービスロボットの開発にも注力しています。",
         "stat1_lbl": "国際安全規格 NEC, NFPA 準拠",
         "stat2_lbl": "24時間年中無休の専門技術サポート",
         "stat3_num": "ベトナム全土",
@@ -498,7 +821,6 @@ const translations = {
         "check2": "ハードウェア＆ソフトウェアの完全内製化技術",
         "check3": "工場現場での実地調査と最適なカスタム提案",
 
-        // Solutions
         "sol_tag": "コアコンピタンス",
         "sol_title": "自動化ソリューション",
         "sol_desc": "最も厳格な国際産業安全基準に準拠し、包括的な制御システムを設計・導入します。",
@@ -526,7 +848,59 @@ const translations = {
         "robot_f2": "スマート商業・飲食サービスロボット",
         "robot_f3": "マシンビジョン画像処理システム統合",
 
-        // Quotes
+        // Project Video Showcase (ja)
+        "prj_tag": "現場実績アーカイブ",
+        "prj_title": "実際のプロジェクト稼働動画",
+        "prj_desc": "VinFast、Rang Dong、Z129、Dreamtech、HANS CNC、JUKI など、ベトナム全国の主要製造工場にBKFASIが納入した自動化ラインの稼働実録です。",
+        "tab_all": "全プロジェクト",
+        "tab_electronics": "電子・半導体部品",
+        "tab_cnc": "プレス＆CNC切削",
+        "tab_textile": "繊維・アパレル自動化",
+        "tab_consumer": "消費財・ガラス製品",
+        "tab_rnd": "研究開発＆検証センター",
+        "btn_watch_video": "動画を再生",
+        "modal_partner_lbl": "納入先 / 工場:",
+        "modal_category_lbl": "分類:",
+        "modal_close": "閉じる",
+
+        "prj_01_t": "SCARAロボットトレイ自動供給 - スマートフォン外装組立ライン",
+        "prj_01_d": "高精度 Dobot SCARA MG400 が多段トレイからスマートフォン外装ワークを高精度にピックし、光学センサー付き検査プレス機へ投入。",
+        "prj_02_t": "スマートフォン筐体組立スマートコンベアライン",
+        "prj_02_d": "自動仕分けコンベアとロボットアームが作業員と同期協調し、サイクルタイムを大幅に短縮。",
+        "prj_03_t": "Dobot MG400 ロボット自動バッチ試験・校正センター",
+        "prj_03_d": "多台数ロボットの自動運転(Auto-run)連続試験ステーション。Robot Control Program と連携しリアルタイムに精度評価。",
+        "prj_04_t": "協働ロボットCNC自動ワーク供給ステーション",
+        "prj_04_d": "6軸協働ロボットが Smart T640 (HANS) CNC マシニングセンタのドアを開閉し、油圧治具へ円形ワークを無人供給。",
+        "prj_05_t": "DOOSAN 協働ロボットによる金属プレス自動供給",
+        "prj_05_d": "安全光電センサーと非常停止連動を備えた Doosan 協働ロボットが金属板ワークを安全にプレス金型内へ投入。",
+        "prj_06_t": "多段ブリスタートレイ電子部品仕分けロボット",
+        "prj_06_d": "立体トレイから電子部品を自動で取り出し測定治具へ搬送、空トレイを自動回収。",
+        "prj_07_t": "STEP 6軸産業用ロボットによる魔法瓶ガラス内胆搬送 - Rang Dong",
+        "prj_07_d": "大型 STEP 産業用ロボットが耐熱ガラス魔法瓶内胆を高速搬送ラインから鏡面銀メッキ自動ラインへ移載。",
+        "prj_08_t": "マイクロセンサー＆キーアレイ高速ピック＆プレース",
+        "prj_08_d": "高精度真空ノズルを備えたロボットアームがマトリクストレイから微小部品を0.8秒以下の高速サイクルで基板へ実装。",
+        "prj_09_t": "デュアルファンクション検査機向け自動供給ロボットセル",
+        "prj_09_d": "1台の中央ロボットが2基の自動検査装置を交互にハンドリングし、OK/NG品を自動選別。",
+        "prj_10_t": "SEYI プレス機自動供給協働ロボットセル - Z129 国防機械工場",
+        "prj_10_d": "SEYI 高出力プレスライン（SN1-45/60）に導入された協働ロボットセル。重労働を解消し挟まれ災害をゼロ化。",
+        "prj_11_t": "高精度空気圧グリッパーによる金型投入クローズアップ",
+        "prj_11_d": "耐熱高負荷グリッパーが金属ビレットを高温金型内へミリ単位の正確さでスムーズに位置決め投入。",
+        "prj_12_t": "メッキ乾燥炉出側魔法瓶取り出しロボットライン - Rang Dong",
+        "prj_12_d": "STEP ロボットがメッキ乾燥炉から銀色に輝く魔法瓶内胆を連続して取り出し、冷却ラインへ移送。",
+        "prj_13_t": "ドライアイス微細表面洗浄ロボットセル (DryIce Automation)",
+        "prj_13_d": "ロボットがCO2超音速ドライアイスノズルを精密制御し、ガラス表面を傷つけることなく微小塵埃を除去。",
+        "prj_14_t": "Dreamtech 工場自動化 - カメラモジュール＆筐体検査ライン",
+        "prj_14_d": "多眼カメラモジュールを連続搬送ライン上でロボットモジュールが自動検査する密閉型クリーンセル。",
+        "prj_15_t": "保護ガラス自動加圧密着＆検査ロボットステーション",
+        "prj_15_d": "ロボットが保護ガラスを治具にセットし、ロードセルによる厳密な加圧制御と気泡欠陥検査を実施。",
+        "prj_16_t": "JACK 工業用CNCパターン縫製機向け自動布地供給協働ロボット",
+        "prj_16_d": "大型ファブリッククランプを備えた協働ロボットが布地を縫製機へ自動セットし、縫製完了品を整頓回収。",
+        "prj_17_t": "JUKI 工業用ミシンラインのロボット自動化システム",
+        "prj_17_d": "布地を自動でならし、しわを防ぎながらJUKIミシンへ正確に送り込み、生産性を2.5倍に向上。",
+        "prj_18_t": "多点真空吸着グリッパー布地自動投入システム - JUKI MAYS01",
+        "prj_18_d": "柔軟な生地や皮革に対応するマルチサクションカップロボットアームが JUKI MAYS01 自動縫製ユニットへ正確に給布。",
+
+        // Quotes & Industries & Testimonials (ja)
         "quote1_text": "「私たちの成長戦略は、自動化制御、生産情報システム、ロボット技術において優れた設計、迅速な実装、真摯なサポートを提供し、お客様と強固で長期的な信頼関係を築くことです。」",
         "quote1_author": "グエン・チー・フン (Nguyen Chi Hung)",
         "quote1_role": "共同創業者 · 共同CEO · 最高技術責任者 (CTO)",
@@ -535,7 +909,6 @@ const translations = {
         "quote2_author": "シム・インボ (Shim In Bo)",
         "quote2_role": "共同創業者 · 共同CEO · 最高財務責任者 (CFO)",
 
-        // Industries
         "ind_tag": "実用適用分野",
         "ind_title": "対応業界",
         "ind_desc": "BKFASI は各産業固有の厳しい要件を満たす専用エンジニアリングソリューションを提供します。",
@@ -556,7 +929,6 @@ const translations = {
         "ind_gen_t": "一般製造業",
         "ind_gen_d": "お客様独自の特殊工程や自動化課題に柔軟に適合するカスタム設計。",
 
-        // Testimonials
         "testi_tag": "お客様の声",
         "testi_title": "導入企業からの評価",
         "testi_desc": "お客様からの信頼と満足こそが、BKFASIのソリューション価値を証明する最大の証です。",
@@ -576,7 +948,6 @@ const translations = {
         "t5_name": "ディン・クオック・バオ",
         "t5_role": "プロジェクトマネージャー – タンタイン機電有限公司",
 
-        // Contact
         "contact_tag": "お問い合わせ",
         "contact_title": "技術相談および協業のお問い合わせ",
         "contact_desc": "PLC、モーション制御、MES、ロボット自動化システムに関するご相談は、お気軽にお問い合わせください：",
@@ -604,27 +975,26 @@ const translations = {
         "btn_submit": "BKFASIに問い合わせを送信",
         "alert_success": "お問い合わせありがとうございます。内容を確認のうえ、担当者より速やかにご連絡いたします。",
 
-        // Footer
         "f_brand_desc": "<strong>BKFASI – バクコア・ファクトリーオートメーション総合システム</strong><br>Factory Automation Systems Intergrator. ベトナムにおける産業用自動化とロボット技術のリーディングカンパニー。",
         "f_solutions": "ソリューション",
+        "f_projects": "主要プロジェクト",
         "f_industries": "対応業界",
         "f_contact": "お問い合わせ先",
         "f_rights": "Copyright © 2022 - 2025 bkfasi.com. All rights reserved."
     },
 
     ko: {
-        // Topbar & Nav
         "hotline": "대표 문의: <strong>+84 91 584 1887</strong>",
         "address_top": "베트남 하노이시 황마이구 자이퐁로 65/11/1295호",
         "nav_home": "홈",
         "nav_about": "회사 소개",
         "nav_solutions": "솔루션",
+        "nav_projects": "실제 프로젝트 영상",
         "nav_industries": "적용 산업",
         "nav_testimonials": "고객 후기",
         "nav_contact": "문의하기",
         "btn_consult": "기술 상담 신청",
 
-        // Hero
         "hero_badge": "FACTORY AUTOMATION SYSTEMS INTEGRATOR",
         "hero_title": "BKFASI – 바크코아 공장 자동화 시스템 통합 주식회사",
         "hero_desc": "베트남 전역의 제조 공장을 위한 턴키 자동화 엔지니어링 솔루션을 제공하는 전문 시스템 통합 기업입니다. 프로그래머블 로직 컨트롤러(PLC), 제조 실행 시스템(MES), 고정밀 모션 제어 및 산업용 로봇 시스템을 전문으로 설계 및 구축합니다.",
@@ -635,11 +1005,10 @@ const translations = {
         "btn_explore": "솔루션 보기",
         "btn_partner": "협력 문의",
 
-        // About
         "about_tag": "회사 소개",
         "about_title": "공장 스마트 자동화를 위한 최고의 엔지니어링 파트너",
-        "about_lead": "<strong>BKFASI</strong>는 베트남 산업 자동화 시스템 통합 및 지능형 설비 제작 분야를 선도하는 기업입니다.",
-        "about_p": "첨단 모션 제어 기술과 제조용 로봇 시스템 연구 개발뿐만 아니라, 무인 판매 로봇, 자동 커피 드립 로봇, 차 및 아이스크림 제조 로봇 등 상업용 스마트 서비스 로봇 사업도 활발히 전개하고 있습니다.",
+        "about_lead": "<strong>BKFASI</strong>는 1985년 하노이 백과대학교 정밀기계공학 연구센터(RPMEC)를 모태로 설립된 베트남 최고의 공장 자동화 및 지능형 기계 시스템 통합 전문 기업입니다.",
+        "about_p": "첨단 모션 제어 및 로봇 자동화 라인 구축(VinFast, Rang Dong, Z129, Dreamtech)과 더불어 무인 판매, 드립 커피, 차, 아이스크림 로봇 등 상업용 스마트 서비스 로봇 사업도 활발히 전개하고 있습니다.",
         "stat1_lbl": "국제 안전 규격 NEC, NFPA 준수",
         "stat2_lbl": "24/7 전문 기술 지원 체계",
         "stat3_num": "베트남 전역",
@@ -650,7 +1019,6 @@ const translations = {
         "check2": "하드웨어 및 소프트웨어 자체 통합 기술력 완비",
         "check3": "현장 정밀 실사 및 맞춤형 자동화 솔루션 제공",
 
-        // Solutions
         "sol_tag": "핵심 역량",
         "sol_title": "자동화 솔루션",
         "sol_desc": "가장 엄격한 산업 안전 규격을 준수하여 신뢰할 수 있는 토털 자동화 시스템을 설계하고 구현합니다.",
@@ -678,7 +1046,59 @@ const translations = {
         "robot_f2": "스마트 F&B 무인 서비스 로봇",
         "robot_f3": "머신 비전(Machine Vision) 영상 인식 연동",
 
-        // Quotes
+        // Project Video Showcase (ko)
+        "prj_tag": "실전 프로젝트 수행 실적",
+        "prj_title": "실제 현장 프로젝트 구축 영상",
+        "prj_desc": "VinFast, Rang Dong, Z129, Dreamtech, HANS CNC, JUKI 등 베트남 전역의 주요 제조 공장에 BKFASI가 직접 설계·제작·구축한 자동화 현장 실황입니다.",
+        "tab_all": "전체 프로젝트",
+        "tab_electronics": "전자 및 반도체 부품",
+        "tab_cnc": "프레스 및 CNC 가공",
+        "tab_textile": "섬유·봉제 자동화",
+        "tab_consumer": "소비재 및 보온병",
+        "tab_rnd": "R&D 및 검증 센터",
+        "btn_watch_video": "영상 보기",
+        "modal_partner_lbl": "고객사 / 공장:",
+        "modal_category_lbl": "분류:",
+        "modal_close": "닫기",
+
+        "prj_01_t": "SCARA 로봇 트레이 자동 공급 - 스마트폰 케이스 조립 라인",
+        "prj_01_d": "고정밀 Dobot SCARA MG400 로봇이 다단 트레이에서 스마트폰 케이스를 정밀 픽업하여 광센서 검사 프레스 스테이션에 투입.",
+        "prj_02_t": "스마트폰 바디 조립 스마트 컨베이어 라인",
+        "prj_02_d": "자동 분류 컨베이어 시스템과 로봇 팔이 작업자와 완벽히 동기화되어 고속 조립 사이클 타임을 달성.",
+        "prj_03_t": "Dobot MG400 로봇 대량 자동화 테스트 및 캘리브레이션 센터",
+        "prj_03_d": "다중 로봇 동시 Auto-run 연속 가동 테스트 스테이션. Robot Control Program과 연동하여 반복 정밀도와 에러를 실시간 분석.",
+        "prj_04_t": "협동로봇 초고속 CNC 머시닝센터 자동 소재 공급",
+        "prj_04_d": "6축 협동로봇이 Smart T640 (HANS) CNC 챔버 도어를 자동으로 개폐하고 원형 소재를 유압 지그에 정밀 장착하여 24시간 무인 가공.",
+        "prj_05_t": "두산(DOOSAN) 협동로봇 금속 프레스 자동 피딩",
+        "prj_05_d": "산업용 Doosan 협동로봇이 금속 판재를 프레스 금형 내로 자동 투입하며 광전 센서와 비상 정지 인터록 완비.",
+        "prj_06_t": "다단 블리스터 트레이 전자 부품 자동 선별 로봇",
+        "prj_06_d": "로봇이 다단 트레이에서 전자 부품을 자동 픽업하여 검사 지그에 장착하고 빈 트레이를 자동 회수.",
+        "prj_07_t": "STEP 6축 산업용 로봇 랑동(Rang Dong) 보온병 유리 내병 이송",
+        "prj_07_d": "중하중 STEP 산업용 로봇이 고열 유리 보온병 내병을 공급 컨베이어에서 자동 은도금 라인으로 정밀 이송.",
+        "prj_08_t": "센서 어레이 및 키 모듈 초고속 픽앤플레이스 로봇",
+        "prj_08_d": "미세 진공 노즐을 탑재한 로봇 팔이 매트릭스 트레이에서 초소형 부품을 0.8초 이내의 고속 사이클로 기판에 배치.",
+        "prj_09_t": "듀얼 스테이션 기능 검사기 자동 공급 로봇 셀",
+        "prj_09_d": "중앙 로봇 1대가 2대의 자동 기능 검사기를 교대로 핸들링하며 OK/NG 제품을 자동 분류.",
+        "prj_10_t": "SEYI 프레스 자동 피딩 협동로봇 셀 - Z129 국방 기계공장",
+        "prj_10_d": "SEYI 고출력 프레스 라인(SN1-45/60)에 적용된 협동로봇 스테이션으로 중노동을 해소하고 프레스 끼임 사고를 원천 방지.",
+        "prj_11_t": "고정밀 공압 그리퍼 금형 안착 클로즈업",
+        "prj_11_d": "내열 공압 그리퍼가 금속 빌렛을 고온 금형 캐비티에 밀리미터 단위 정밀도로 부드럽게 안착.",
+        "prj_12_t": "랑동 보온병 도금 건조로 출구 로봇 취출 라인",
+        "prj_12_d": "STEP 로봇이 고온 건조로에서 나온 은도금 보온병 내병을 연속 취출하여 순환 냉각 컨베이어로 안전하게 이송.",
+        "prj_13_t": "드라이아이스 미세 표면 세정 로봇 셀 (DryIce Automation)",
+        "prj_13_d": "로봇이 초음속 CO2 드라이아이스 노즐을 정밀 제어하여 스마트폰 백커버 표면의 미세 이물질을 무손상·무잔류 세정.",
+        "prj_14_t": "드림텍(Dreamtech) 스마트 팩토리 - 카메라 및 케이스 검사 라인",
+        "prj_14_d": "연속 컨베이어 상에서 스마트폰 멀티 카메라 모듈과 외관을 정밀 검사하는 클린룸 로봇 모듈 라인.",
+        "prj_15_t": "보호 유리 정밀 압착 및 검사 로봇 스테이션",
+        "prj_15_d": "로봇 팔이 보호 유리를 지그에 안착시키고 정밀 로드셀 압력 제어 및 광학 기포 감지를 수행.",
+        "prj_16_t": "JACK 산업용 패턴 재봉기 자동 원단 공급 협동로봇",
+        "prj_16_d": "대형 원단 클램프를 장착한 협동로봇이 CNC 재봉기에 원단을 자동 투입하고 완성품을 정돈 적재.",
+        "prj_17_t": "JUKI 산업용 봉제 라인 로봇 자동화 시스템",
+        "prj_17_d": "원단을 자동으로 펴고 정렬하여 JUKI 재봉 헤드로 정밀 유도, 봉제 라인 생산성을 2.5배 향상.",
+        "prj_18_t": "다점 진공 흡착 로봇 팔 JUKI MAYS01 원단 자동 공급",
+        "prj_18_d": "유연 원단 및 가죽 핸들링 전용 멀티 석션 컵 로봇이 JUKI MAYS01 자동 봉제 유닛에 정밀 공급.",
+
+        // Quotes & Industries & Testimonials (ko)
         "quote1_text": "“우리의 성장 전략은 자동화 제어, 생산 정보 시스템, 로봇 공학 분야에서 탁월한 엔지니어링 설계와 효율적인 구축, 헌신적인 사후 지원을 통해 고객과 장기적 신뢰 관계를 구축하는 것입니다.”",
         "quote1_author": "응우옌 치 흥 (Nguyen Chi Hung)",
         "quote1_role": "공동 창립자 · 공동 대표이사 · 최고기술책임자 (CTO)",
@@ -687,7 +1107,6 @@ const translations = {
         "quote2_author": "심인보 (Shim In Bo)",
         "quote2_role": "공동 창립자 · 공동 대표이사 · 최고재무책임자 (CFO)",
 
-        // Industries
         "ind_tag": "적용 산업",
         "ind_title": "주요 서비스 분야",
         "ind_desc": "BKFASI는 각 제조 산업의 엄격한 요건에 부합하는 산업별 맞춤형 자동화 엔지니어링을 제공합니다.",
@@ -708,7 +1127,6 @@ const translations = {
         "ind_gen_t": "일반 제조업",
         "ind_gen_d": "고객사의 고유한 작업 환경과 비표준 자동화 요구에 맞춘 유연한 설계.",
 
-        // Testimonials
         "testi_tag": "고객 후기",
         "testi_title": "파트너 평가",
         "testi_desc": "고객의 신뢰와 만족은 BKFASI 솔루션의 가치를 증명하는 최고의 척도입니다.",
@@ -728,7 +1146,6 @@ const translations = {
         "t5_name": "딘 꾸옥 바오",
         "t5_role": "프로젝트 총괄 – 탄타인 기전 유한회사",
 
-        // Contact
         "contact_tag": "문의하기",
         "contact_title": "사업 협력 및 기술 컨설팅 문의",
         "contact_desc": "PLC, 모션 제어, MES 및 로봇 자동화 시스템 도입을 원하시면 언제든 문의해 주십시오:",
@@ -756,11 +1173,15 @@ const translations = {
         "btn_submit": "상담 신청서 제출하기",
         "alert_success": "신청해 주셔서 감사합니다. 접수된 내용을 확인 후 신속히 연락드리겠습니다.",
 
-        // Footer
         "f_brand_desc": "<strong>BKFASI – 바크코아 공장 자동화 시스템 통합 주식회사</strong><br>Factory Automation Systems Intergrator. 베트남 공장 자동화 및 로봇 엔지니어링 선도 기업.",
         "f_solutions": "솔루션",
+        "f_projects": "주요 실적",
         "f_industries": "적용 산업",
         "f_contact": "연락처 안내",
         "f_rights": "Copyright © 2022 - 2025 bkfasi.com. All rights reserved."
     }
 };
+
+// Expose globally
+window.projectData = projectData;
+window.translations = translations;

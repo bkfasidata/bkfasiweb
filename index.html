@@ -57,6 +57,7 @@
                     <li><a href="#about" class="nav-link" data-i18n="nav_about">Về Chúng Tôi</a></li>
                     <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">Giải Pháp</a></li>
                     <li><a href="#industries" class="nav-link" data-i18n="nav_industries">Ngành Công Nghiệp</a></li>
+                    <li><a href="#projects" class="nav-link" data-i18n="nav_projects">Dự Án</a></li>
                     <li><a href="#testimonials" class="nav-link" data-i18n="nav_testimonials">Cảm Nhận</a></li>
                     <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Liên Hệ</a></li>
                 </ul>
@@ -382,6 +383,532 @@
             </div>
         </section>
 
+        <!-- Real Projects Video Showcase Section -->
+        <section class="section projects-showcase-section bg-light" id="projects">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="section-tag" data-i18n="prj_tag">HỒ SƠ NĂNG LỰC THỰC CHIẾN</div>
+                    <h2 class="section-title" data-i18n="prj_title">Video Dự Án Thực Tế Đã Triển Khai</h2>
+                    <p class="section-desc mx-auto" data-i18n="prj_desc">
+                        Tổng hợp các dự án tự động hóa, robot công nghiệp và dây chuyền chế tạo thông minh do BKFASI trực tiếp thiết kế, chế tạo và chuyển giao tại các nhà máy trên toàn quốc.
+                    </p>
+                </div>
+
+                <!-- Category Filter Tabs -->
+                <div class="projects-filter-bar">
+                    <button class="pfilter-btn active" data-filter="all">
+                        <i class="fa-solid fa-layer-group"></i> <span data-i18n="tab_all">Tất Cả Dự Án</span> <span class="filter-count">(18)</span>
+                    </button>
+                    <button class="pfilter-btn" data-filter="electronics">
+                        <i class="fa-solid fa-microchip"></i> <span data-i18n="tab_electronics">Linh Kiện Điện Tử & Bán Dẫn</span>
+                    </button>
+                    <button class="pfilter-btn" data-filter="cnc">
+                        <i class="fa-solid fa-gears"></i> <span data-i18n="tab_cnc">Dập & Gia Công CNC</span>
+                    </button>
+                    <button class="pfilter-btn" data-filter="textile">
+                        <i class="fa-solid fa-shirt"></i> <span data-i18n="tab_textile">Tự Động Hóa Dệt May</span>
+                    </button>
+                    <button class="pfilter-btn" data-filter="consumer">
+                        <i class="fa-solid fa-bottle-water"></i> <span data-i18n="tab_consumer">Hàng Tiêu Dùng & Thủy Tinh</span>
+                    </button>
+                    <button class="pfilter-btn" data-filter="rnd">
+                        <i class="fa-solid fa-flask-vial"></i> <span data-i18n="tab_rnd">Nghiên Cứu & Kiểm Định</span>
+                    </button>
+                </div>
+
+                <!-- Projects Video Grid -->
+                <div class="video-projects-grid">
+
+                    <div class="video-project-card" data-category="electronics" data-id="prj_01">
+                        <div class="vcard-media" onclick="openVideoModal('prj_01')">
+                            <img src="images/video_thumbs/prj_01_phone_scara_tray.jpg" alt="prj_01" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 02:07</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Dreamtech / Smartphone Supply Chain</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_01_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_01_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Dobot SCARA</span><span class="vcard-tech-tag">Tray Feeder</span><span class="vcard-tech-tag">Auto Press</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_01')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_02">
+                        <div class="vcard-media" onclick="openVideoModal('prj_02')">
+                            <img src="images/video_thumbs/prj_02_phone_conveyor_assembly.jpg" alt="prj_02" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 02:35</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Dreamtech Factory</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_02_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_02_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Smart Conveyor</span><span class="vcard-tech-tag">Human-Robot Sync</span><span class="vcard-tech-tag">Assembly Line</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_02')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="rnd" data-id="prj_03">
+                        <div class="vcard-media" onclick="openVideoModal('prj_03')">
+                            <img src="images/video_thumbs/prj_03_robot_testing_center.jpg" alt="prj_03" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 03:42</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> BKFASI R&D & Testing Center</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_03_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_03_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Dobot MG400</span><span class="vcard-tech-tag">Multi-Robot Auto-Run</span><span class="vcard-tech-tag">Calibration</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_03')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="cnc" data-id="prj_04">
+                        <div class="vcard-media" onclick="openVideoModal('prj_04')">
+                            <img src="images/video_thumbs/prj_04_cnc_machine_tending.jpg" alt="prj_04" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 00:45</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Precision CNC Center</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_04_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_04_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Cobot 6-Axis</span><span class="vcard-tech-tag">CNC Smart T640</span><span class="vcard-tech-tag">Hydraulic Clamping</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_04')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="cnc" data-id="prj_05">
+                        <div class="vcard-media" onclick="openVideoModal('prj_05')">
+                            <img src="images/video_thumbs/prj_05_doosan_press_feeding.jpg" alt="prj_05" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:02</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Z129 Defense Mechanical Plant</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_05_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_05_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">DOOSAN Cobot</span><span class="vcard-tech-tag">Metal Stamping</span><span class="vcard-tech-tag">Safety Barrier</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_05')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_06">
+                        <div class="vcard-media" onclick="openVideoModal('prj_06')">
+                            <img src="images/video_thumbs/prj_06_tray_sorting_robot.jpg" alt="prj_06" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:13</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Electronic Component Assembly</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_06_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_06_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Blister Tray</span><span class="vcard-tech-tag">High-Speed Pick</span><span class="vcard-tech-tag">Testing Jig</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_06')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="consumer" data-id="prj_07">
+                        <div class="vcard-media" onclick="openVideoModal('prj_07')">
+                            <img src="images/video_thumbs/prj_07_rangdong_step_robot_1.jpg" alt="prj_07" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 00:53</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Rang Dong Light Source & Flask JSC</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_07_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_07_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">STEP 6-Axis</span><span class="vcard-tech-tag">Vacuum Flask</span><span class="vcard-tech-tag">Mirror Plating</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_07')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_08">
+                        <div class="vcard-media" onclick="openVideoModal('prj_08')">
+                            <img src="images/video_thumbs/prj_08_micro_pick_and_place.jpg" alt="prj_08" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 02:10</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> SMT & Micro-sensor Array Line</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_08_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_08_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Micro Pick & Place</span><span class="vcard-tech-tag">Vacuum Nozzle</span><span class="vcard-tech-tag">Matrix Tray</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_08')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_09">
+                        <div class="vcard-media" onclick="openVideoModal('prj_09')">
+                            <img src="images/video_thumbs/prj_09_dual_station_inspection.jpg" alt="prj_09" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 02:10</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Mobile Accessories Plant</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_09_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_09_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Dual Station</span><span class="vcard-tech-tag">OK/NG Sort</span><span class="vcard-tech-tag">Functional Test</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_09')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="cnc" data-id="prj_10">
+                        <div class="vcard-media" onclick="openVideoModal('prj_10')">
+                            <img src="images/video_thumbs/prj_10_seyi_press_z129.jpg" alt="prj_10" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:03</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Z129 Defense Plant - 40 Cobot Stations</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_10_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_10_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">SEYI SN1-45/60</span><span class="vcard-tech-tag">Billet Feeding</span><span class="vcard-tech-tag">Zero Accidents</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_10')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="cnc" data-id="prj_11">
+                        <div class="vcard-media" onclick="openVideoModal('prj_11')">
+                            <img src="images/video_thumbs/prj_11_press_gripper_detail.jpg" alt="prj_11" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:05</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Precision Stamping Tooling</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_11_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_11_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Pneumatic Gripper</span><span class="vcard-tech-tag">Precision Die</span><span class="vcard-tech-tag">High Temperature</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_11')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="consumer" data-id="prj_12">
+                        <div class="vcard-media" onclick="openVideoModal('prj_12')">
+                            <img src="images/video_thumbs/prj_12_rangdong_drying_furnace.jpg" alt="prj_12" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:16</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Rang Dong Vacuum Flask JSC</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_12_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_12_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">STEP Robot</span><span class="vcard-tech-tag">Plating Furnace</span><span class="vcard-tech-tag">Thermal Resistant</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_12')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_13">
+                        <div class="vcard-media" onclick="openVideoModal('prj_13')">
+                            <img src="images/video_thumbs/prj_13_dryice_cleaning_robot.jpg" alt="prj_13" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 00:38</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Smartphone Glass & Housing Facility</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_13_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_13_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">DryIce Cleaning</span><span class="vcard-tech-tag">CO2 Blasting</span><span class="vcard-tech-tag">Surface Treatment</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_13')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_14">
+                        <div class="vcard-media" onclick="openVideoModal('prj_14')">
+                            <img src="images/video_thumbs/prj_14_dreamtech_camera_test.jpg" alt="prj_14" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:22</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Dreamtech Vietnam (Samsung Supplier)</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_14_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_14_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Dreamtech Vietnam</span><span class="vcard-tech-tag">Camera Inspection</span><span class="vcard-tech-tag">Smart Conveyor</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_14')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="electronics" data-id="prj_15">
+                        <div class="vcard-media" onclick="openVideoModal('prj_15')">
+                            <img src="images/video_thumbs/prj_15_glass_pressing_robot.jpg" alt="prj_15" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 00:54</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Display & Touch Panel Plant</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_15_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_15_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Screen Glass Press</span><span class="vcard-tech-tag">Pressure Sensor</span><span class="vcard-tech-tag">Bubble Detection</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_15')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="textile" data-id="prj_16">
+                        <div class="vcard-media" onclick="openVideoModal('prj_16')">
+                            <img src="images/video_thumbs/prj_16_jack_sewing_cobot.jpg" alt="prj_16" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 00:53</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Smart Apparel & Footwear Factory</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_16_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_16_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">JACK CNC Sewing</span><span class="vcard-tech-tag">Fabric Gripper</span><span class="vcard-tech-tag">Garment Cobot</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_16')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="textile" data-id="prj_17">
+                        <div class="vcard-media" onclick="openVideoModal('prj_17')">
+                            <img src="images/video_thumbs/prj_17_juki_sewing_line.jpg" alt="prj_17" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 01:50</span>
+                                <span class="badge-res">FHD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> High-End Garment Export Factory</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_17_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_17_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">JUKI Sewing Machine</span><span class="vcard-tech-tag">Robotic Guide</span><span class="vcard-tech-tag">+150% Productivity</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_17')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-project-card" data-category="textile" data-id="prj_18">
+                        <div class="vcard-media" onclick="openVideoModal('prj_18')">
+                            <img src="images/video_thumbs/prj_18_juki_multiaxis_suction.jpg" alt="prj_18" class="vcard-thumb" loading="lazy">
+                            <div class="vcard-overlay">
+                                <button class="vcard-play-btn" aria-label="Play Video">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="vcard-badges">
+                                <span class="badge-dur"><i class="fa-regular fa-clock"></i> 02:40</span>
+                                <span class="badge-res">HD 720p</span>
+                            </div>
+                        </div>
+                        <div class="vcard-body">
+                            <div class="vcard-meta">
+                                <span class="vcard-partner"><i class="fa-solid fa-building-circle-check"></i> Intelligent Textile Automation Center</span>
+                            </div>
+                            <h3 class="vcard-title" data-i18n="prj_18_t"></h3>
+                            <p class="vcard-desc" data-i18n="prj_18_d"></p>
+                            <div class="vcard-tech-wrap">
+                                <span class="vcard-tech-tag">Multi-Suction Cup</span><span class="vcard-tech-tag">Flexible Fabric</span><span class="vcard-tech-tag">JUKI MAYS01</span>
+                            </div>
+                            <button class="vcard-action-btn" onclick="openVideoModal('prj_18')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-i18n="btn_watch_video">Xem Video Chi Tiết</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Testimonials Section -->
         <section class="section testimonials-section bg-light" id="testimonials">
             <div class="container">
@@ -637,6 +1164,30 @@
             </div>
         </div>
     </footer>
+
+    <!-- Video Player Lightbox Modal -->
+    <div id="videoModal" class="video-modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="video-modal-backdrop" id="videoModalBackdrop"></div>
+        <div class="video-modal-dialog">
+            <button class="video-modal-close" id="videoModalClose" aria-label="Đóng video">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="video-modal-player-wrapper">
+                <video id="modalVideoPlayer" controls playsinline preload="auto">
+                    Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+                </video>
+            </div>
+            <div class="video-modal-details">
+                <div class="vmodal-header">
+                    <span id="modalPartner" class="vmodal-partner"><i class="fa-solid fa-building-circle-check"></i> <span class="partner-name">BKFASI Project</span></span>
+                    <span id="modalQuality" class="badge-res">HD 720p</span>
+                </div>
+                <h3 id="modalTitle" class="vmodal-title">Tiêu đề dự án</h3>
+                <p id="modalDesc" class="vmodal-desc">Mô tả chi tiết giải pháp kỹ thuật.</p>
+                <div id="modalTech" class="vmodal-tech"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Back to top button -->
     <button id="backToTop" class="back-to-top" aria-label="Lên đầu trang">
