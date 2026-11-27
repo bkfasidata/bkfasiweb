@@ -296,11 +296,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+let lastContactSubmitTs = 0;
+
 /**
- * Handle Contact Form Submission
+ * Handle Contact Form Submission (with Honeypot & Rate-Limit)
  */
 function handleContactSubmit(event) {
     event.preventDefault();
+    const hp = document.getElementById('c_website_hp');
+    if (hp && hp.value.trim() !== '') {
+        return; // Bot detected via honeypot
+    }
+    const now = Date.now();
+    if (now - lastContactSubmitTs < 30000) {
+        alert('Vui lòng đợi 30 giây trước khi gửi yêu cầu tiếp theo.');
+        return;
+    }
+    lastContactSubmitTs = now;
+
     const form = document.getElementById('contactForm');
     const alertBox = document.getElementById('contactSuccessAlert');
     const submitBtn = form.querySelector('button[type="submit"]');

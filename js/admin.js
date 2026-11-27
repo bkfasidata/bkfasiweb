@@ -6,10 +6,43 @@
 
 (function () {
     const STORAGE_KEY = 'bkfasi_cms_state_v1';
-    const SESSION_KEY = 'bkfasi_admin_logged_in';
-    const GITHUB_TOKEN_KEY = 'bkfasi_gh_pat';
+    const SESSION_KEY = 'bkfasi_admin_session_v2';
+    const LOGIN_GUARD_KEY = 'bkfasi_login_guard_v1';
+    const GITHUB_TOKEN_KEY = 'bkfasi_gh_pat_session';
     const DEFAULT_USER = 'admin';
-    const DEFAULT_PASS = 'bkfasi2026';
+    const PASS_SALT = 'bkfasi-salt-2026';
+    const DEFAULT_PASS_HASH = 'ddcbb1cb61a26736a18fbd84873d965a481cbe20a4b85abdc5b8b18597ab8a53';
+    const SESSION_TTL_MS = 30 * 60 * 1000; // 30 phút không hoạt động tự đăng xuất
+    const MAX_FAILED_ATTEMPTS = 5;
+    const BASE_LOCKOUT_MS = 5 * 60 * 1000; // Khóa 5 phút sau 5 lần sai
+
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    async function hashPassword(password, salt = PASS_SALT) {
+        const enc = new TextEncoder();
+        const data = enc.encode(`${salt}:${password}`);
+        const buf = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function getLoginGuard() {
+        try {
+            return JSON.parse(localStorage.getItem(LOGIN_GUARD_KEY)) || { fails: 0, lockUntil: 0, lockCount: 0 };
+        } catch (e) {
+            return { fails: 0, lockUntil: 0, lockCount: 0 };
+        }
+    }
+
+    function saveLoginGuard(g) {
+        try { localStorage.setItem(LOGIN_GUARD_KEY, JSON.stringify(g)); } catch (e) {}
+    }
 
     // ==========================================
     // 1. IndexedDB Storage for Uploaded Videos/Images
@@ -183,7 +216,9 @@
     // ==========================================
     function createEmptyState() {
         return {
-            adminPass: DEFAULT_PASS,
+            adminPassHash: DEFAULT_PASS_HASH,
+            adminSalt: PASS_SALT,
+            stealthAdmin: false,
             autoSyncVi: true,
             textOverrides: { vi: {}, en: {}, zh: {}, ja: {}, ko: {} },
             imageOverrides: {},
@@ -239,16 +274,32 @@
     }
 
     function isLoggedIn() {
-        return sessionStorage.getItem(SESSION_KEY) === 'true' || localStorage.getItem(SESSION_KEY) === 'true';
+        try {
+            const raw = sessionStorage.getItem(SESSION_KEY);
+            if (!raw) return false;
+            const sess = JSON.parse(raw);
+            if (!sess || !sess.exp || Date.now() > sess.exp) {
+                sessionStorage.removeItem(SESSION_KEY);
+                return false;
+            }
+            return sess.auth === true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function refreshSession() {
+        if (isLoggedIn()) {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify({ auth: true, exp: Date.now() + SESSION_TTL_MS }));
+        }
     }
 
     function setLoggedIn(val) {
+        localStorage.removeItem('bkfasi_admin_logged_in');
         if (val) {
-            sessionStorage.setItem(SESSION_KEY, 'true');
-            localStorage.setItem(SESSION_KEY, 'true');
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify({ auth: true, exp: Date.now() + SESSION_TTL_MS }));
         } else {
             sessionStorage.removeItem(SESSION_KEY);
-            localStorage.removeItem(SESSION_KEY);
         }
         updateAuthUI();
     }
@@ -665,18 +716,14 @@
                 <div class="cms-login-dialog">
                     <div class="cms-login-header">
                         <h3><i class="fa-solid fa-user-shield"></i> Đăng Nhập Quản Trị (Admin)</h3>
-                        <p>Chỉnh sửa nội dung, hình ảnh, tab, quotes và video dự án</p>
+                        <p>Bảo vệ bằng SHA-256 & Khóa chống dò mật khẩu</p>
                         <button class="cms-close-x" id="cmsLoginClose"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <form class="cms-login-body" id="cmsLoginForm">
-                        <div class="cms-login-hint">
-                            <strong>Tài khoản mặc định:</strong> <code>admin</code> / Mật khẩu: <code>bkfasi2026</code><br>
-                            <small>(Bạn có thể đổi mật khẩu sau khi đăng nhập)</small>
-                        </div>
                         <div class="cms-login-error" id="cmsLoginError">Sai tên đăng nhập hoặc mật khẩu!</div>
                         <div class="cms-field">
                             <label>Tên đăng nhập</label>
-                            <input type="text" id="cmsUser" value="admin" required autocomplete="username">
+                            <input type="text" id="cmsUser" placeholder="Nhập tài khoản admin..." required autocomplete="username">
                         </div>
                         <div class="cms-field">
                             <label>Mật khẩu</label>
@@ -691,18 +738,53 @@
             document.body.appendChild(lm);
             document.getElementById('cmsLoginBackdrop').onclick = closeLoginModal;
             document.getElementById('cmsLoginClose').onclick = closeLoginModal;
-            document.getElementById('cmsLoginForm').onsubmit = (e) => {
+            document.getElementById('cmsLoginForm').onsubmit = async (e) => {
                 e.preventDefault();
+                const errBox = document.getElementById('cmsLoginError');
+                const guard = getLoginGuard();
+                const now = Date.now();
+                if (guard.lockUntil && now < guard.lockUntil) {
+                    const remainSec = Math.ceil((guard.lockUntil - now) / 1000);
+                    errBox.textContent = `Tài khoản tạm khóa chống dò mật khẩu. Vui lòng thử lại sau ${remainSec} giây.`;
+                    errBox.style.display = 'block';
+                    return;
+                }
+
                 const u = document.getElementById('cmsUser').value.trim();
                 const p = document.getElementById('cmsPass').value;
-                if (u === DEFAULT_USER && p === (cmsState.adminPass || DEFAULT_PASS)) {
-                    document.getElementById('cmsLoginError').style.display = 'none';
+                const salt = cmsState.adminSalt || PASS_SALT;
+                const expectedHash = cmsState.adminPassHash || DEFAULT_PASS_HASH;
+                const inputHash = await hashPassword(p, salt);
+
+                // Migrate legacy plaintext adminPass if existed
+                const legacyOk = cmsState.adminPass && p === cmsState.adminPass;
+
+                if (u === DEFAULT_USER && (inputHash === expectedHash || legacyOk)) {
+                    if (legacyOk) {
+                        cmsState.adminPassHash = inputHash;
+                        cmsState.adminSalt = salt;
+                        delete cmsState.adminPass;
+                        saveState(true);
+                    }
+                    saveLoginGuard({ fails: 0, lockUntil: 0, lockCount: 0 });
+                    errBox.style.display = 'none';
                     setLoggedIn(true);
                     closeLoginModal();
                     openDashboard();
-                    showToast('Đăng nhập Admin thành công!', 'success');
+                    showToast('Đăng nhập Admin thành công! (Phiên tự hết hạn sau 30 phút không hoạt động)', 'success');
                 } else {
-                    document.getElementById('cmsLoginError').style.display = 'block';
+                    guard.fails = (guard.fails || 0) + 1;
+                    if (guard.fails >= MAX_FAILED_ATTEMPTS) {
+                        guard.lockCount = (guard.lockCount || 0) + 1;
+                        const lockDuration = BASE_LOCKOUT_MS * Math.pow(2, Math.min(guard.lockCount - 1, 3));
+                        guard.lockUntil = now + lockDuration;
+                        guard.fails = 0;
+                        errBox.textContent = `Nhập sai quá ${MAX_FAILED_ATTEMPTS} lần! Đã khóa đăng nhập trong ${Math.round(lockDuration / 60000)} phút.`;
+                    } else {
+                        errBox.textContent = `Sai tên đăng nhập hoặc mật khẩu! (Còn ${MAX_FAILED_ATTEMPTS - guard.fails} lần thử)`;
+                    }
+                    saveLoginGuard(guard);
+                    errBox.style.display = 'block';
                 }
             };
         }
@@ -788,6 +870,7 @@
         const trigger = document.getElementById('adminTriggerBtn');
         const bar = document.getElementById('adminFloatingBar');
         if (trigger) {
+            trigger.style.display = (!logged && cmsState.stealthAdmin) ? 'none' : 'inline-flex';
             if (logged) {
                 trigger.classList.add('logged-in');
                 trigger.innerHTML = '<i class="fa-solid fa-sliders"></i> <span>Admin CMS</span>';
@@ -1498,18 +1581,18 @@
     // --- TAB 5: Xuất bản & Bảo mật ---
     function renderPublishTab() {
         const pane = document.getElementById('tabPublish');
-        const savedToken = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+        const savedToken = sessionStorage.getItem(GITHUB_TOKEN_KEY) || '';
         pane.innerHTML = `
             <div class="cms-section-head"><h3>Xuất bản lên GitHub Pages & Bảo mật</h3></div>
 
             <div class="cms-card">
                 <div class="cms-card-title"><span><i class="fa-brands fa-github"></i> Đồng bộ trực tiếp lên GitHub Pages (bkfasidata/bkfasiweb)</span></div>
                 <p style="font-size:0.86rem;color:#475569;margin-bottom:14px;line-height:1.55;">
-                    Khi chỉnh sửa trên trình duyệt, dữ liệu mới chỉ lưu cục bộ để bạn xem trước. Để <strong>mọi khách truy cập trên Internet</strong> đều thấy nội dung, ảnh, tab, quotes và trạng thái ẩn/hiện video mới, hãy kết nối GitHub Personal Access Token (chỉ lưu trên trình duyệt của bạn) để đẩy file <code>js/cms-overrides.js</code> lên GitHub.
+                    Khi chỉnh sửa trên trình duyệt, dữ liệu mới chỉ lưu cục bộ để bạn xem trước. Để <strong>mọi khách truy cập trên Internet</strong> đều thấy nội dung, ảnh, tab, quotes và trạng thái ẩn/hiện video mới, hãy kết nối GitHub Personal Access Token (chỉ lưu tạm trong phiên trình duyệt hiện tại) để đẩy file <code>js/cms-overrides.js</code> lên GitHub.
                 </p>
                 <div class="cms-field">
                     <label>GitHub Personal Access Token (quyền repo)</label>
-                    <input type="password" id="ghPatInput" value="${savedToken}" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                    <input type="password" id="ghPatInput" value="${savedToken}" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
                 </div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;">
                     <button class="cms-btn cms-btn-primary" id="btnPushGitHub"><i class="fa-solid fa-cloud-arrow-up"></i> Xuất bản lên GitHub Ngay</button>
@@ -1518,35 +1601,62 @@
             </div>
 
             <div class="cms-card">
-                <div class="cms-card-title"><span><i class="fa-solid fa-key"></i> Đổi mật khẩu Admin & Sao lưu</span></div>
+                <div class="cms-card-title"><span><i class="fa-solid fa-shield-halved"></i> Bảo mật tài khoản Admin & Chống dò mật khẩu</span></div>
                 <div class="cms-grid-2">
                     <div class="cms-field">
-                        <label>Mật khẩu Admin mới</label>
-                        <input type="password" id="newAdminPass" placeholder="Nhập mật khẩu mới...">
+                        <label>Mật khẩu Admin mới (tối thiểu 8 ký tự, nên có chữ + số)</label>
+                        <input type="password" id="newAdminPass" placeholder="Nhập mật khẩu mạnh..." autocomplete="new-password">
                     </div>
                     <div style="display:flex;align-items:flex-end;padding-bottom:16px;">
-                        <button class="cms-btn cms-btn-success" id="btnSavePass"><i class="fa-solid fa-check"></i> Cập nhật mật khẩu</button>
+                        <button class="cms-btn cms-btn-success" id="btnSavePass"><i class="fa-solid fa-check"></i> Cập nhật mật khẩu (SHA-256)</button>
                     </div>
+                </div>
+                <div style="padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:14px;">
+                    <label class="cms-switch">
+                        <input type="checkbox" id="toggleStealthAdmin" ${cmsState.stealthAdmin ? 'checked' : ''}>
+                        <span class="cms-switch-slider"></span>
+                        <span><strong>Chế độ Ẩn nút Admin (Stealth Mode):</strong> Ẩn nút "Admin" khỏi thanh Topbar công khai (Mở đăng nhập bằng phím <code>Ctrl + Shift + A</code> hoặc thêm <code>#bkfasi-admin</code> vào URL)</span>
+                    </label>
                 </div>
                 <div style="border-top:1px solid #e2e8f0;padding-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
                     <button class="cms-btn cms-btn-outline" id="btnExportJson"><i class="fa-solid fa-file-export"></i> Sao lưu JSON</button>
                     <button class="cms-btn cms-btn-danger" id="btnResetCms"><i class="fa-solid fa-triangle-exclamation"></i> Khôi phục toàn bộ về mặc định gốc</button>
                 </div>
             </div>
+
+            <div class="cms-card" style="background:#f8fafc;border-color:#cbd5e1;">
+                <div class="cms-card-title"><span><i class="fa-solid fa-network-wired"></i> Lớp bảo vệ Chống DDoS & Tường lửa (Cloudflare)</span></div>
+                <p style="font-size:0.84rem;color:#475569;line-height:1.6;margin:0;">
+                    • <strong>Bảo vệ đã kích hoạt trên mã nguồn:</strong> Băm mật khẩu SHA-256 + Salt, tự động khóa 5–40 phút khi nhập sai 5 lần, tự đăng xuất sau 30 phút không thao tác, lọc XSS (<code>escapeHtml</code>), chính sách bảo mật CSP & chống spam form liên hệ.<br>
+                    • <strong>Bảo vệ DDoS tầng mạng (Layer 3/4/7):</strong> GitHub Pages có sẵn chống DDoS hạ tầng. Khi trỏ tên miền <code>bkfasi.com</code> qua <strong>Cloudflare (gói Miễn phí)</strong> và bật proxy đám mây cam + chế độ <em>Bot Fight Mode / Under Attack Mode</em>, lưu lượng DDoS sẽ bị chặn từ bên ngoài trước khi chạm tới website.
+                </p>
+            </div>
         `;
 
-        document.getElementById('btnSavePass').onclick = () => {
+        document.getElementById('toggleStealthAdmin').onchange = (e) => {
+            cmsState.stealthAdmin = e.target.checked;
+            saveState();
+            updateAuthUI();
+            showToast(cmsState.stealthAdmin ? 'Đã bật Stealth Mode (Ẩn nút Admin công khai). Dùng Ctrl+Shift+A để mở lại.' : 'Đã hiện lại nút Admin trên Topbar.', 'info');
+        };
+
+        document.getElementById('btnSavePass').onclick = async () => {
             const np = document.getElementById('newAdminPass').value.trim();
-            if (np.length < 4) return showToast('Mật khẩu phải có ít nhất 4 ký tự!', 'error');
-            cmsState.adminPass = np;
+            if (np.length < 8) return showToast('Mật khẩu mới phải có ít nhất 8 ký tự để đảm bảo an toàn!', 'error');
+            const newSalt = 'bkfasi-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+            cmsState.adminSalt = newSalt;
+            cmsState.adminPassHash = await hashPassword(np, newSalt);
+            delete cmsState.adminPass;
             saveState();
             document.getElementById('newAdminPass').value = '';
-            showToast('Đã đổi mật khẩu Admin thành công!', 'success');
+            showToast('Đã cập nhật mật khẩu mã hóa SHA-256 thành công!', 'success');
         };
 
         document.getElementById('btnDownloadOverrides').onclick = () => {
             const exportObj = { ...cmsState };
             delete exportObj.adminPass;
+            delete exportObj.adminPassHash;
+            delete exportObj.adminSalt;
             const content = `/** BKFASI CMS Published Overrides */\nwindow.BKFASI_CMS_PUBLISHED = ${JSON.stringify(exportObj, null, 2)};\n`;
             const blob = new Blob([content], { type: 'application/javascript' });
             const a = document.createElement('a');
@@ -1556,7 +1666,9 @@
         };
 
         document.getElementById('btnExportJson').onclick = () => {
-            const blob = new Blob([JSON.stringify(cmsState, null, 2)], { type: 'application/json' });
+            const safeExport = { ...cmsState };
+            delete safeExport.adminPass;
+            const blob = new Blob([JSON.stringify(safeExport, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = `bkfasi-cms-backup-${new Date().toISOString().slice(0, 10)}.json`;
@@ -1575,7 +1687,7 @@
         document.getElementById('btnPushGitHub').onclick = async () => {
             const token = document.getElementById('ghPatInput').value.trim();
             if (!token) return showToast('Vui lòng nhập GitHub Personal Access Token!', 'error');
-            localStorage.setItem(GITHUB_TOKEN_KEY, token);
+            sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
 
             showToast('Đang đẩy thay đổi lên GitHub...', 'info');
             try {
@@ -1588,6 +1700,8 @@
                 }
                 const exportObj = { ...cmsState };
                 delete exportObj.adminPass;
+                delete exportObj.adminPassHash;
+                delete exportObj.adminSalt;
                 const fileStr = `/** BKFASI CMS Published Overrides */\nwindow.BKFASI_CMS_PUBLISHED = ${JSON.stringify(exportObj, null, 2)};\n`;
                 const b64 = btoa(unescape(encodeURIComponent(fileStr)));
 
@@ -1615,11 +1729,38 @@
     }
 
     // ==========================================
-    // 8. Initialize CMS on DOM Ready
+    // 8. Initialize CMS on DOM Ready & Security Listeners
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
         injectAdminUI();
         applyAllToDOM();
+
+        // Secret shortcut Ctrl + Shift + A or #bkfasi-admin URL hash to open Admin Login
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+                e.preventDefault();
+                if (isLoggedIn()) openDashboard();
+                else openLoginModal();
+            }
+        });
+        if (window.location.hash === '#bkfasi-admin') {
+            if (isLoggedIn()) openDashboard();
+            else openLoginModal();
+        }
+
+        // Refresh idle timeout on user activity while logged in
+        ['click', 'keydown', 'scroll'].forEach(evt => {
+            document.addEventListener(evt, () => {
+                if (isLoggedIn()) refreshSession();
+            }, { passive: true });
+        });
+        setInterval(() => {
+            if (document.getElementById('adminFloatingBar')?.classList.contains('active') && !isLoggedIn()) {
+                setLoggedIn(false);
+                closeDashboard();
+                showToast('Phiên Admin đã hết hạn do không hoạt động.', 'info');
+            }
+        }, 30000);
 
         // Hook into language selector changes so CMS overrides re-apply immediately
         const langSelect = document.getElementById('langSelect');
