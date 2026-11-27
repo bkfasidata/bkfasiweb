@@ -68,6 +68,66 @@
     const blobUrlCache = {};
 
     // ==========================================
+    // 1.5 Multi-Language Auto-Translation Engine (VI -> EN, ZH, JA, KO)
+    // ==========================================
+    const TARGET_LANGS = ['en', 'zh', 'ja', 'ko'];
+    const translationCache = {};
+
+    async function translateSingleText(text, targetLang) {
+        const clean = (text || '').trim();
+        if (!clean) return '';
+        const cacheKey = `${targetLang}::${clean}`;
+        if (translationCache[cacheKey]) return translationCache[cacheKey];
+
+        // 1. Primary: Google Translate GTX endpoint
+        const tlGoogle = targetLang === 'zh' ? 'zh-CN' : targetLang;
+        try {
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=${tlGoogle}&dt=t&q=${encodeURIComponent(clean)}`;
+            const res = await fetch(url);
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && Array.isArray(data[0])) {
+                    const translated = data[0].map(seg => seg[0] || '').join('');
+                    if (translated) {
+                        translationCache[cacheKey] = translated;
+                        return translated;
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn('Google GTX translate fallback:', e);
+        }
+
+        // 2. Fallback: MyMemory API
+        const tlMemory = targetLang === 'zh' ? 'zh-CN' : targetLang;
+        try {
+            const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean.slice(0, 500))}&langpair=vi|${tlMemory}`;
+            const res = await fetch(mmUrl);
+            if (res.ok) {
+                const data = await res.json();
+                const translated = data && data.responseData && data.responseData.translatedText;
+                if (translated && !translated.includes('MYMEMORY WARNING')) {
+                    translationCache[cacheKey] = translated;
+                    return translated;
+                }
+            }
+        } catch (e) {
+            console.warn('MyMemory translate fallback:', e);
+        }
+
+        return clean;
+    }
+
+    async function translateAllFromVi(viText) {
+        const clean = (viText || '').trim();
+        if (!clean) return { vi: '', en: '', zh: '', ja: '', ko: '' };
+        const [en, zh, ja, ko] = await Promise.all(
+            TARGET_LANGS.map(lang => translateSingleText(clean, lang))
+        );
+        return { vi: viText, en, zh, ja, ko };
+    }
+
+    // ==========================================
     // 2. Default Tabs & Image Slots Definitions
     // ==========================================
     const DEFAULT_PROJECT_TABS = [
@@ -124,6 +184,7 @@
     function createEmptyState() {
         return {
             adminPass: DEFAULT_PASS,
+            autoSyncVi: true,
             textOverrides: { vi: {}, en: {}, zh: {}, ja: {}, ko: {} },
             imageOverrides: {},
             customQuotes: [],
@@ -362,11 +423,14 @@
             container.innerHTML = '';
             return;
         }
+        const lang = document.documentElement.lang || 'vi';
         container.innerHTML = cmsState.customQuotes.map((q, idx) => {
             const isDark = q.style === 'dark';
             const secClass = isDark ? 'section quote-section bg-dark text-white' : 'section quote-section-alt';
             const wrapClass = idx % 2 === 1 ? 'quote-wrapper reverse' : 'quote-wrapper';
             const iconClass = isDark ? 'fa-solid fa-quote-left quote-icon' : 'fa-solid fa-quote-left quote-icon text-primary';
+            const qText = (q.texts && (q.texts[lang] || q.texts.vi)) || q.text || '';
+            const qRole = (q.roles && (q.roles[lang] || q.roles.vi)) || q.role || '';
             const avatarHtml = `
                 <div class="quote-avatar">
                     <img src="${q.avatar || 'images/avatar1_2.jpg'}" alt="${q.author}" class="quote-img">
@@ -374,10 +438,10 @@
             const contentHtml = `
                 <div class="quote-content">
                     <i class="${iconClass}"></i>
-                    <blockquote class="quote-text">${q.text}</blockquote>
+                    <blockquote class="quote-text">${qText}</blockquote>
                     <div class="quote-author">
                         <h4>${q.author}</h4>
-                        <p>${q.role}</p>
+                        <p>${qRole}</p>
                         <span class="company-sub">BKFASI - Factory Automation Systems Intergrator</span>
                     </div>
                 </div>`;
@@ -408,12 +472,17 @@
         }
         if (secContainer) secContainer.innerHTML = '';
 
+        const lang = document.documentElement.lang || 'vi';
         cmsState.navTabs.forEach(tab => {
             if (tab.visible === false) return;
+            const label = (tab.labels && (tab.labels[lang] || tab.labels.vi)) || tab.label || '';
+            const secTitle = (tab.sectionTitles && (tab.sectionTitles[lang] || tab.sectionTitles.vi)) || tab.sectionTitle || label;
+            const secContent = (tab.sectionContents && (tab.sectionContents[lang] || tab.sectionContents.vi)) || tab.sectionContent || '';
+
             const li = document.createElement('li');
             li.className = 'cms-custom-nav-item';
             const targetHref = tab.href && tab.href.trim() ? tab.href.trim() : `#custom_sec_${tab.id}`;
-            li.innerHTML = `<a href="${targetHref}" class="nav-link">${tab.label}</a>`;
+            li.innerHTML = `<a href="${targetHref}" class="nav-link">${label}</a>`;
             navList.appendChild(li);
 
             if (!tab.href && secContainer) {
@@ -424,10 +493,10 @@
                     <div class="container">
                         <div class="section-header text-center">
                             <div class="section-tag">BKFASI</div>
-                            <h2 class="section-title">${tab.sectionTitle || tab.label}</h2>
+                            <h2 class="section-title">${secTitle}</h2>
                         </div>
                         <div style="max-width:860px;margin:0 auto;font-size:1.02rem;line-height:1.75;color:#334155;background:#fff;padding:28px;border-radius:14px;border:1px solid #e2e8f0;">
-                            ${(tab.sectionContent || '').replace(/\n/g, '<br>')}
+                            ${secContent.replace(/\n/g, '<br>')}
                         </div>
                     </div>`;
                 secContainer.appendChild(sec);
@@ -806,7 +875,10 @@
                 </div>`;
         }).join('');
 
-        const customQuotesHtml = cmsState.customQuotes.map((q, idx) => `
+        const customQuotesHtml = cmsState.customQuotes.map((q, idx) => {
+            const qRole = (q.roles && q.roles.vi) || q.role || '';
+            const qText = (q.texts && q.texts.vi) || q.text || '';
+            return `
             <div class="cms-quote-item">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                     <strong>Quote #${idx + 1}: ${q.author}</strong>
@@ -814,10 +886,23 @@
                 </div>
                 <div class="cms-grid-2">
                     <div class="cms-field"><label>Tác giả</label><input type="text" value="${q.author}" onchange="window._cmsUpdateQuote('${q.id}','author',this.value)"></div>
-                    <div class="cms-field"><label>Chức vụ</label><input type="text" value="${q.role}" onchange="window._cmsUpdateQuote('${q.id}','role',this.value)"></div>
+                    <div class="cms-field"><label>Chức vụ (Tiếng Việt - tự đồng bộ 4 ngôn ngữ)</label><input type="text" value="${qRole.replace(/"/g, '&quot;')}" onchange="window._cmsUpdateQuote('${q.id}','role',this.value)"></div>
                 </div>
-                <div class="cms-field"><label>Nội dung trích dẫn</label><textarea rows="2" onchange="window._cmsUpdateQuote('${q.id}','text',this.value)">${q.text}</textarea></div>
-            </div>`).join('');
+                <div class="cms-field"><label>Nội dung trích dẫn (Tiếng Việt - tự đồng bộ 4 ngôn ngữ)</label><textarea rows="2" onchange="window._cmsUpdateQuote('${q.id}','text',this.value)">${qText}</textarea></div>
+            </div>`;
+        }).join('');
+
+        const autoSyncBar = editingLang === 'vi' ? `
+            <div class="cms-card" style="background:#eff6ff;border-color:#93c5fd;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+                <label class="cms-switch" style="font-size:0.86rem;">
+                    <input type="checkbox" id="cmsAutoSyncViToggle" ${cmsState.autoSyncVi !== false ? 'checked' : ''}>
+                    <span class="cms-switch-slider"></span>
+                    <span>Tự động dịch sang <strong>EN, ZH, JA, KO</strong> khi sửa Tiếng Việt</span>
+                </label>
+                <button class="cms-btn cms-btn-primary cms-btn-sm" id="btnSyncAllTextVi">
+                    <i class="fa-solid fa-language"></i> Dịch đồng bộ toàn bộ mục đã sửa sang 4 ngôn ngữ
+                </button>
+            </div>` : '';
 
         pane.innerHTML = `
             <div class="cms-section-head">
@@ -829,18 +914,19 @@
                     </select>
                 </div>
             </div>
+            ${autoSyncBar}
             ${groupsHtml}
             <div class="cms-card">
                 <div class="cms-card-title">
-                    <span><i class="fa-solid fa-quote-left"></i> Thêm Quote mới (Hiển thị thêm trên trang chủ)</span>
+                    <span><i class="fa-solid fa-quote-left"></i> Thêm Quote mới (Tự động dịch sang 5 ngôn ngữ)</span>
                 </div>
                 ${customQuotesHtml || '<p style="font-size:0.85rem;color:#64748b;margin-bottom:14px;">Chưa có Quote bổ sung nào.</p>'}
                 <div style="border-top:1px dashed #cbd5e1;padding-top:14px;margin-top:10px;">
                     <div class="cms-grid-2">
                         <div class="cms-field"><label>Tên tác giả *</label><input type="text" id="newQAuthor" placeholder="VD: Trần Văn B"></div>
-                        <div class="cms-field"><label>Chức vụ / Công ty</label><input type="text" id="newQRole" placeholder="VD: Giám đốc Dự án - BKFASI"></div>
+                        <div class="cms-field"><label>Chức vụ / Công ty (Tiếng Việt)</label><input type="text" id="newQRole" placeholder="VD: Giám đốc Dự án - BKFASI"></div>
                     </div>
-                    <div class="cms-field"><label>Nội dung Quote *</label><textarea id="newQText" rows="2" placeholder="Nhập thông điệp trích dẫn..."></textarea></div>
+                    <div class="cms-field"><label>Nội dung Quote (Tiếng Việt) *</label><textarea id="newQText" rows="2" placeholder="Nhập thông điệp trích dẫn..."></textarea></div>
                     <div class="cms-grid-2">
                         <div class="cms-field"><label>Ảnh đại diện (Upload từ máy)</label><input type="file" id="newQAvatarFile" accept="image/*"></div>
                         <div class="cms-field"><label>Kiểu nền</label>
@@ -857,6 +943,37 @@
             renderContentTab();
         };
 
+        const syncToggle = document.getElementById('cmsAutoSyncViToggle');
+        if (syncToggle) {
+            syncToggle.onchange = () => {
+                cmsState.autoSyncVi = syncToggle.checked;
+                saveState(true);
+            };
+        }
+
+        const btnSyncAll = document.getElementById('btnSyncAllTextVi');
+        if (btnSyncAll) {
+            btnSyncAll.onclick = async () => {
+                const viMap = cmsState.textOverrides.vi || {};
+                const keys = Object.keys(viMap).filter(k => viMap[k] && viMap[k].trim() !== '');
+                if (!keys.length) {
+                    return showToast('Bạn chưa chỉnh sửa mục Tiếng Việt nào để đồng bộ!', 'info');
+                }
+                showToast(`Đang dịch ${keys.length} mục sang EN, ZH, JA, KO...`, 'info');
+                for (const key of keys) {
+                    const tr = await translateAllFromVi(viMap[key]);
+                    TARGET_LANGS.forEach(l => {
+                        if (!cmsState.textOverrides[l]) cmsState.textOverrides[l] = {};
+                        cmsState.textOverrides[l][key] = tr[l];
+                    });
+                }
+                saveState();
+                applyTextOverridesToDom(document.documentElement.lang || 'vi');
+                showToast('Đã đồng bộ dịch xong tất cả nội dung sang 4 ngôn ngữ!', 'success');
+            };
+        }
+
+        const fieldTimers = {};
         pane.querySelectorAll('[data-cms-text-key]').forEach(el => {
             el.addEventListener('input', () => {
                 const key = el.getAttribute('data-cms-text-key');
@@ -864,12 +981,26 @@
                 cmsState.textOverrides[editingLang][key] = el.value;
                 saveState(true);
                 applyTextOverridesToDom(document.documentElement.lang || 'vi');
+
+                if (editingLang === 'vi' && cmsState.autoSyncVi !== false && el.value.trim()) {
+                    clearTimeout(fieldTimers[key]);
+                    fieldTimers[key] = setTimeout(async () => {
+                        const tr = await translateAllFromVi(el.value);
+                        TARGET_LANGS.forEach(l => {
+                            if (!cmsState.textOverrides[l]) cmsState.textOverrides[l] = {};
+                            cmsState.textOverrides[l][key] = tr[l];
+                        });
+                        saveState(true);
+                        applyTextOverridesToDom(document.documentElement.lang || 'vi');
+                        showToast(`Đã tự động dịch "${key}" sang EN, ZH, JA, KO`, 'success');
+                    }, 950);
+                }
             });
         });
 
         document.getElementById('btnAddQuote').onclick = async () => {
             const author = document.getElementById('newQAuthor').value.trim();
-            const role = document.getElementById('newQRole').value.trim();
+            const role = document.getElementById('newQRole').value.trim() || 'Ban lãnh đạo BKFASI';
             const text = document.getElementById('newQText').value.trim();
             const style = document.getElementById('newQStyle').value;
             const fileInput = document.getElementById('newQAvatarFile');
@@ -877,21 +1008,33 @@
                 showToast('Vui lòng nhập Tên tác giả và Nội dung Quote!', 'error');
                 return;
             }
+            showToast('Đang xử lý & dịch Quote sang 5 ngôn ngữ...', 'info');
             let avatar = 'images/avatar1_2.jpg';
             if (fileInput.files && fileInput.files[0]) {
                 avatar = await compressImageFile(fileInput.files[0], 600, 0.85);
             }
+            const cleanText = text.replace(/^“|”$/g, '');
+            const [roles, texts] = await Promise.all([
+                translateAllFromVi(role),
+                translateAllFromVi(cleanText)
+            ]);
+            Object.keys(texts).forEach(l => {
+                if (texts[l]) texts[l] = `“${texts[l].replace(/^“|”$/g, '')}”`;
+            });
             cmsState.customQuotes.push({
                 id: 'q_' + Date.now(),
                 author,
-                role: role || 'BKFASI Leadership',
-                text: `“${text.replace(/^“|”$/g, '')}”`,
+                role: roles.vi,
+                roles,
+                text: texts.vi,
+                texts,
                 avatar,
                 style
             });
             saveState();
             renderCustomQuotesToDom();
             renderContentTab();
+            showToast('Đã thêm Quote & đồng bộ 5 ngôn ngữ!', 'success');
         };
     }
 
@@ -901,13 +1044,23 @@
         renderCustomQuotesToDom();
         renderContentTab();
     };
-    window._cmsUpdateQuote = (id, field, val) => {
+    window._cmsUpdateQuote = async (id, field, val) => {
         const q = cmsState.customQuotes.find(x => x.id === id);
-        if (q) {
-            q[field] = val;
-            saveState();
-            renderCustomQuotesToDom();
+        if (!q) return;
+        q[field] = val;
+        if (field === 'role') {
+            q.roles = await translateAllFromVi(val);
+        } else if (field === 'text') {
+            const clean = val.replace(/^“|”$/g, '');
+            const texts = await translateAllFromVi(clean);
+            Object.keys(texts).forEach(l => {
+                if (texts[l]) texts[l] = `“${texts[l].replace(/^“|”$/g, '')}”`;
+            });
+            q.texts = texts;
+            q.text = texts.vi;
         }
+        saveState();
+        renderCustomQuotesToDom();
     };
 
     // --- TAB 2: Hình ảnh Web ---
@@ -1018,37 +1171,60 @@
             </div>
         `;
 
-        document.getElementById('btnAddPTab').onclick = () => {
+        document.getElementById('btnAddPTab').onclick = async () => {
             const vi = document.getElementById('newPTabVi').value.trim();
-            const en = document.getElementById('newPTabEn').value.trim() || vi;
+            const manualEn = document.getElementById('newPTabEn').value.trim();
             const icon = document.getElementById('newPTabIcon').value.trim() || 'fa-solid fa-folder';
             if (!vi) return showToast('Vui lòng nhập tên Tab!', 'error');
+            showToast('Đang dịch tên Tab sang 5 ngôn ngữ...', 'info');
+            const labels = await translateAllFromVi(vi);
+            if (manualEn) labels.en = manualEn;
             const id = 'tab_' + Date.now();
             cmsState.projectTabs.push({
                 id, icon, visible: true, isDefault: false,
-                labels: { vi, en, zh: en, ja: en, ko: en }
+                labels
             });
             saveState();
             renderProjectsSectionToDom();
             renderTabsManager();
+            showToast('Đã thêm Tab Dự Án với đầy đủ 5 ngôn ngữ!', 'success');
         };
 
-        document.getElementById('btnAddNavTab').onclick = () => {
+        document.getElementById('btnAddNavTab').onclick = async () => {
             const label = document.getElementById('newNavLabel').value.trim();
             const href = document.getElementById('newNavHref').value.trim();
             const sectionTitle = document.getElementById('newNavSecTitle').value.trim();
             const sectionContent = document.getElementById('newNavSecContent').value.trim();
             if (!label) return showToast('Vui lòng nhập tên Tab Menu!', 'error');
-            cmsState.navTabs.push({ id: Date.now(), label, href, sectionTitle, sectionContent, visible: true });
+            showToast('Đang dịch Tab Menu & nội dung sang 5 ngôn ngữ...', 'info');
+            const [labels, sectionTitles, sectionContents] = await Promise.all([
+                translateAllFromVi(label),
+                sectionTitle ? translateAllFromVi(sectionTitle) : Promise.resolve(null),
+                sectionContent ? translateAllFromVi(sectionContent) : Promise.resolve(null)
+            ]);
+            cmsState.navTabs.push({
+                id: Date.now(),
+                label, labels,
+                href,
+                sectionTitle, sectionTitles,
+                sectionContent, sectionContents,
+                visible: true
+            });
             saveState();
             renderCustomNavTabsToDom();
             renderTabsManager();
+            showToast('Đã thêm Tab Menu đa ngôn ngữ!', 'success');
         };
     }
 
-    window._cmsUpdateProjTab = (idx, lang, val) => {
+    window._cmsUpdateProjTab = async (idx, lang, val) => {
         if (!cmsState.projectTabs[idx].labels) cmsState.projectTabs[idx].labels = {};
-        cmsState.projectTabs[idx].labels[lang] = val;
+        if (lang === 'vi' && cmsState.autoSyncVi !== false && val.trim()) {
+            cmsState.projectTabs[idx].labels = await translateAllFromVi(val);
+            renderTabsManager();
+        } else {
+            cmsState.projectTabs[idx].labels[lang] = val;
+        }
         saveState();
         renderProjectsSectionToDom();
     };
@@ -1113,7 +1289,14 @@
                             <div class="cms-field"><label>Tags công nghệ (cách nhau dấu phẩy)</label><input type="text" id="evTech" value="${(p.tech || []).join(', ')}"></div>
                             <div class="cms-field"><label>Đổi ảnh Thumbnail (tùy chọn)</label><input type="file" id="evThumbFile" accept="image/*"></div>
                         </div>
-                        <button class="cms-btn cms-btn-primary" onclick="window._cmsSaveEditVideo('${p.id}', ${!!p.isCustom})"><i class="fa-solid fa-check"></i> Lưu thông tin Video</button>
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;">
+                            <label class="cms-switch">
+                                <input type="checkbox" id="evAutoTranslate" checked>
+                                <span class="cms-switch-slider"></span>
+                                <span>Tự động dịch Tiêu đề & Mô tả Tiếng Việt sang <strong>EN, ZH, JA, KO</strong> khi lưu</span>
+                            </label>
+                            <button class="cms-btn cms-btn-primary" onclick="window._cmsSaveEditVideo('${p.id}', ${!!p.isCustom})"><i class="fa-solid fa-check"></i> Lưu thông tin Video</button>
+                        </div>
                     </div>`;
             }
         }
@@ -1180,7 +1363,7 @@
             if (!file) return showToast('Vui lòng chọn file video!', 'error');
             if (!titleVi) return showToast('Vui lòng nhập Tên dự án!', 'error');
 
-            showToast('Đang xử lý video & tạo thumbnail...', 'info');
+            showToast('Đang xử lý video, tạo thumbnail & dịch 5 ngôn ngữ...', 'info');
             const meta = await extractVideoMetaAndThumb(file);
             let thumb = meta.thumb;
             const customThumbFile = document.getElementById('upVidThumb').files[0];
@@ -1192,8 +1375,14 @@
             const dbKey = 'vid_' + id;
             await MediaDB.put(dbKey, file);
 
-            const titleEn = document.getElementById('upVidTitleEn').value.trim() || titleVi;
+            const manualEn = document.getElementById('upVidTitleEn').value.trim();
             const descVi = document.getElementById('upVidDescVi').value.trim() || 'Giải pháp tự động hóa công nghiệp triển khai bởi BKFASI.';
+            const [titles, descs] = await Promise.all([
+                translateAllFromVi(titleVi),
+                translateAllFromVi(descVi)
+            ]);
+            if (manualEn) titles.en = manualEn;
+
             const techRaw = document.getElementById('upVidTech').value.trim();
             const tech = techRaw ? techRaw.split(',').map(s => s.trim()).filter(Boolean) : ['BKFASI Automation'];
 
@@ -1208,13 +1397,13 @@
                 quality: meta.quality,
                 tech,
                 visible: true,
-                titles: { vi: titleVi, en: titleEn, zh: titleEn, ja: titleEn, ko: titleEn },
-                descs: { vi: descVi, en: descVi, zh: descVi, ja: descVi, ko: descVi }
+                titles,
+                descs
             });
             saveState();
             renderProjectsSectionToDom();
             renderVideosManager();
-            showToast('Đã upload video mới lên mục Dự án!', 'success');
+            showToast('Đã upload video mới & dịch đủ 5 ngôn ngữ!', 'success');
         };
     }
 
@@ -1252,9 +1441,22 @@
         const dEn = document.getElementById('evDescEn').value.trim();
         const tech = document.getElementById('evTech').value.split(',').map(s => s.trim()).filter(Boolean);
         const thumbFile = document.getElementById('evThumbFile').files[0];
+        const autoTr = document.getElementById('evAutoTranslate') && document.getElementById('evAutoTranslate').checked;
 
         let newThumb = null;
         if (thumbFile) newThumb = await compressImageFile(thumbFile, 800, 0.82);
+
+        let titlesObj = { vi: tVi, en: tEn };
+        let descsObj = { vi: dVi, en: dEn };
+        if (autoTr && (tVi || dVi)) {
+            showToast('Đang đồng bộ dịch thông tin video sang 5 ngôn ngữ...', 'info');
+            const [trTitles, trDescs] = await Promise.all([
+                tVi ? translateAllFromVi(tVi) : Promise.resolve({}),
+                dVi ? translateAllFromVi(dVi) : Promise.resolve({})
+            ]);
+            titlesObj = { ...trTitles, vi: tVi };
+            descsObj = { ...trDescs, vi: dVi };
+        }
 
         if (isCustom) {
             const cv = cmsState.customVideos.find(v => v.id === id);
@@ -1263,8 +1465,8 @@
                 cv.partner = partner;
                 cv.duration = duration;
                 cv.tech = tech;
-                cv.titles = { ...(cv.titles || {}), vi: tVi, en: tEn };
-                cv.descs = { ...(cv.descs || {}), vi: dVi, en: dEn };
+                cv.titles = { ...(cv.titles || {}), ...titlesObj };
+                cv.descs = { ...(cv.descs || {}), ...descsObj };
                 if (newThumb) cv.thumb = newThumb;
             }
         } else {
@@ -1272,8 +1474,8 @@
             cmsState.videoOverrides[id] = {
                 ...prev,
                 category, partner, duration, tech,
-                titles: { ...(prev.titles || {}), vi: tVi, en: tEn },
-                descs: { ...(prev.descs || {}), vi: dVi, en: dEn }
+                titles: { ...(prev.titles || {}), ...titlesObj },
+                descs: { ...(prev.descs || {}), ...descsObj }
             };
             if (newThumb) cmsState.videoOverrides[id].thumb = newThumb;
         }
@@ -1431,3 +1633,4 @@
         });
     });
 })();
+
